@@ -18,7 +18,7 @@ const Cadastro = () => {
         email,
         password,
       });
-      alert(`Cadastro bem-sucedido! Token: ${response.data.access_token}`);
+      alert(`Cadastro bem-sucedido!`);
       // Aqui você pode armazenar o token em localStorage ou contexto
     } catch (error) {
       setError('Erro.');
