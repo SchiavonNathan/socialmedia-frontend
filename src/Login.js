@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import FacebookLogin from 'react-facebook-login'; 
 
 const Login = () => {
   const [name, setName] = useState('');
@@ -21,6 +22,22 @@ const Login = () => {
       setError('Username ou senha incorretos.');
     }
   };
+
+  const responseFacebook = async (response) => {
+    if (response.accessToken) {
+      try {
+        // Envia o token do Facebook para seu servidor para autenticação
+        const authResponse = await axios.post('http://localhost:3001/auth/facebook', {
+          accessToken: response.accessToken,
+        });
+        alert(`Login com Facebook bem-sucedido! Token: ${authResponse.data.access_token}`);
+        // Armazene o token em localStorage ou contexto, conforme necessário
+      } catch (error) {
+        setError('Erro ao autenticar com o Facebook.');
+      }
+    }
+  };
+
 
   return (
     <div style={{ maxWidth: '400px', margin: 'auto', padding: '20px' }}>
@@ -45,11 +62,22 @@ const Login = () => {
           />
         </div>
         {error && <p style={{ color: 'red' }}>{error}</p>}
+        {/* Botão Post */}
         <button type="submit">Entrar</button>
       </form>
       <Link to="./Cadastro.js">
           <button>Cadastrar</button>
       </Link>
+       {/* Botão de Login do Facebook */}
+       <FacebookLogin
+        appId="1963945814110125"  // Substitua pelo seu App ID do Facebook
+        autoLoad={false}
+        fields="name,email,picture"
+        callback={responseFacebook} // Função que será chamada após o login
+        textButton="Login com Facebook"
+        size="small"
+        icon="fa-facebook"
+      />
      </div>
   );
 };
