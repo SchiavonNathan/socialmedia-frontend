@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './Cadastro.css';
+import '../styles/Cadastro.css';
 
 const Cadastro = () => {
   const [name, setName] = useState('');
