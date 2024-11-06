@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import './Cadastro.css';
 
 const Cadastro = () => {
   const [name, setName] = useState('');
@@ -13,55 +13,70 @@ const Cadastro = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3001/users', {
-        name,
-        email,
-        password,
-      });
-      alert(`Cadastro bem-sucedido!`);
-      // Aqui você pode armazenar o token em localStorage ou contexto
+      await axios.post('http://localhost:3001/users', { name, email, password });
+      alert('Cadastro bem-sucedido!');
     } catch (error) {
-      setError('Erro.');
+      setError('Erro ao cadastrar. Tente novamente.');
     }
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: 'auto', padding: '20px' }}>
-      <h2>Página de Cadastro</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Nome:</label>
-          <input
-            type="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+    <div className="container">
+      <div className="card">
+        <h2>Cadastro</h2>
+        
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">
+              <i className="fas fa-user-circle" style={{ color: '#FF6F61' }}></i> Nome
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">
+              <i className="fas fa-envelope" style={{ color: '#4B89DC' }}></i> Email
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">
+              <i className="fas fa-lock" style={{ color: '#01B392' }}></i> Senha
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          {error && <p className="error-message">{error}</p>}
+          
+          <button type="submit">Cadastrar</button>
+        </form>
+        
+        <div className="text-center mt-3">
+          <Link to="/" className="btn-link">
+            <i className="fas fa-sign-in-alt"></i> Já tenho conta
+          </Link>
         </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Senha:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Cadastrar</button>
-      </form>
-      <Link to="/">
-          <button>Login</button>
-      </Link>
+      </div>
     </div>
   );
 };

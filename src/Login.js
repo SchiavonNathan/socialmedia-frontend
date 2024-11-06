@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import FacebookLogin from 'react-facebook-login'; 
 
 const Login = () => {
   const [name, setName] = useState('');
@@ -22,18 +21,22 @@ const Login = () => {
       setError('Username ou senha incorretos.');
     }
   };
+  
 
   const handleFacebookLogin = () => {
     window.location.href = 'http://localhost:3001/auth/facebook';
   };
 
+  // ----------------------------------------------------------------
 
   return (
     <div style={{ maxWidth: '400px', margin: 'auto', padding: '20px' }}>
       <h2>Página de Login</h2>
       <form onSubmit={handleSubmit}>
+      <button onClick={handleFacebookLogin}>Continue com Facebook</button>
+      <button onClick={handleFacebookLogin}>Continue com Google</button>
         <div>
-          <label>Username:</label>
+          <label>Nome</label>
           <input
             type="name"
             value={name}
@@ -42,7 +45,7 @@ const Login = () => {
           />
         </div>
         <div>
-          <label>Senha:</label>
+          <label>Senha</label>
           <input
             type="password"
             value={password}
@@ -55,10 +58,10 @@ const Login = () => {
         <button type="submit">Entrar</button>
       </form>
       <Link to="./Cadastro.js">
-          <button>Cadastrar</button>
+          <button>Não tem Conta? Cadastre-se</button>
       </Link>
        {/* Botão de Login do Facebook */}
-       <button onClick={handleFacebookLogin}>Login com Facebook</button>;
+
      </div>
   );
 };
