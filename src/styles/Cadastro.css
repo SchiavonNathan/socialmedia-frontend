@@ -1,0 +1,95 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #643890, #017D6F);
+  }
+  
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    color: #FFF;
+  }
+  
+  .card {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background-color: #E0F7F4;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card h2 {
+    color: #017D6F;
+    font-family: 'Pacifico', cursive;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .form-group label i {
+    margin-right: 10px;
+    font-size: 1.5rem;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid;
+    border-radius: 5px;
+  }
+  
+  .form-group input#name {
+    border-color: #FF6F61;
+  }
+  
+  .form-group input#email {
+    border-color: #4B89DC;
+  }
+  
+  .form-group input#password {
+    border-color: #01B392;
+  }
+  
+  .error-message {
+    color: #FF6F61;
+    text-align: center;
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    background-color: #01B392;
+    color: #FFF;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #017D6F;
+  }
+  
+  .btn-link {
+    color: #017D6F;
+    font-family: 'Pacifico', cursive;
+    text-align: center;
+    display: block;
+    margin-top: 20px;
+    text-decoration: none;
+  }
+  
+  .btn-link i {
+    margin-right: 5px;
+  }
+  
