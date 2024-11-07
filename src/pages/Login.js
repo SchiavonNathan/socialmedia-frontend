@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import '../styles/Login.css';
 
 const Login = () => {
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -13,13 +13,13 @@ const Login = () => {
 
     try {
       const response = await axios.post('http://localhost:3001/auth/login', {
-        name,
+        email,
         password,
       });
       alert(`Login bem-sucedido! Token: ${response.data.access_token}`);
       // Aqui você pode armazenar o token em localStorage ou contexto
     } catch (error) {
-      setError('Username ou senha incorretos.');
+      setError('Email ou senha incorretos.');
     }
   };
 
@@ -45,12 +45,12 @@ const Login = () => {
             </button>
           </div>
           <div className="form-group">
-            <label htmlFor="name">Nome</label>
+            <label htmlFor="name">Email</label>
             <input
               type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
