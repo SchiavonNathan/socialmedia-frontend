@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate(); // Hook para navegação
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,8 +17,16 @@ const Login = () => {
         email,
         password,
       });
-      alert(`Login bem-sucedido! Token: ${response.data.access_token}`);
-      // Aqui você pode armazenar o token em localStorage ou contexto
+      
+      // Armazenar o token e o user_id no localStorage
+      localStorage.setItem('access_token', response.data.access_token);
+      localStorage.setItem('user_id', response.data.user_id);
+
+      alert(`Login bem-sucedido! token: ${response.data.access_token}`);
+
+      // Redirecionar para a página Home após login bem-sucedido
+      navigate('/home'); // Caminho da página Home (ajuste conforme sua rota)
+
     } catch (error) {
       setError('Email ou senha incorretos.');
     }
@@ -45,7 +54,7 @@ const Login = () => {
             </button>
           </div>
           <div className="form-group">
-            <label htmlFor="name">Email</label>
+            <label htmlFor="email">Email</label>
             <input
               type="text"
               id="email"
@@ -67,7 +76,7 @@ const Login = () => {
           {error && <p className="error-message">{error}</p>}
           <button type="submit">Entrar</button>
         </form>
-        <Link to="/Cadastro.js" className="btn-link">
+        <Link to="/Cadastro" className="btn-link">
           <i className="fas fa-user-plus"></i> Não tem Conta? Cadastre-se
         </Link>
       </div>
