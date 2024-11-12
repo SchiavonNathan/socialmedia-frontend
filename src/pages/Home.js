@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import '../styles/Cadastro.css';
+import '../styles/styles.css';
 
 const Home = () => {
   const [user, setUser] = useState(null);
