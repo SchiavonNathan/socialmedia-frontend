@@ -55,3 +55,10 @@ html, body {
 .cinza{
   background-color: #00000046;
 }
+
+#googleButtonContainer > div {
+  transform: scale(1); /* Aumenta o tamanho do botão */
+  transform-origin: center; /* Centraliza o crescimento */
+  width: 100%; /* Garante que o botão ocupe a largura do contêiner */
+  max-width: none; /* Remove limite de largura do botão */
+}

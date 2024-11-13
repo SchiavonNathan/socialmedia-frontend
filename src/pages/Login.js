@@ -3,8 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { jwtDecode } from 'jwt-decode';
-
+import {jwtDecode} from 'jwt-decode';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -37,11 +36,11 @@ const Login = () => {
   };
 
   //------------------------google--------------------------------------
-  function handleCallbackResponse(response){
-    console.log("TOKEN JWT ENCODED: " + response.credential)
-    var userObject = jwtDecode(response.credential)
+  function handleCallbackResponse(response) {
+    console.log("TOKEN JWT ENCODED: " + response.credential);
+    const userObject = jwtDecode(response.credential);
     console.log(userObject);
-
+  
     axios.post('http://localhost:3001/users/googlelogin', {
       email: userObject.email,
       given_name: userObject.given_name,
@@ -49,38 +48,75 @@ const Login = () => {
       picture: userObject.picture,
     })
     .then(res => {
-        localStorage.setItem('user_id', res.data[0].id);
-        console.log("Resposta do backend: ", res.data);
-        alert(`Login bem-sucedido! token`);
-        navigate('/home');
+      localStorage.setItem('user_id', res.data[0].id);
+      console.log("Resposta do backend: ", res.data);
+      alert(`Login bem-sucedido! token`);
+      navigate('/home');
     })
     .catch(err => {
-        console.error("Erro ao enviar dados para o backend: ", err);
+      console.error("Erro ao enviar dados para o backend: ", err);
     });
   }
-
+  
   useEffect(() => {
-    /* global google*/
+    /* global google */
     google.accounts.id.initialize({
       client_id: "469880395067-2ui4fsi0lk3kvrvlo2fkemk4tv75jifb.apps.googleusercontent.com",
       callback: handleCallbackResponse
     });
-
+  
     google.accounts.id.renderButton(
-      document.getElementById("signInDiv"),
-      {theme: "filled_blue", size: "medium"}
-    )
-  }, [])
-
+      document.getElementById("googleButtonContainer"),
+      { theme: "filled_white", size: "large" }
+    );
+  }, []);
+  
   return (
     <div className="container-fluid d-flex align-items-center justify-content-center vh-100 cadastro-login">
       <div className="card p-4 shadow-lg">
         <h2 className="text-center text-primary mb-3">Login</h2>
-        <div className="d-flex justify-content-center mb-3">
-          <button type="button" className="btn btn-primary me-2" onClick={handleFacebookLogin}>
-            <i className="fab fa-facebook-f me-2"></i>Continue com Facebook
+        <div className="d-flex flex-column align-items-center mb-3" style={{ width: "100%" }}>
+          {/* Botao do GOOGLE */}
+          <div 
+            id="googleButtonContainer" 
+            style={{
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+              borderRadius: "4px",
+              padding: "0", // Remove o padding para evitar bordas visíveis ao redor
+              width: "100%",  // Faz o contêiner ter a largura total
+              marginBottom: "10px",
+              display: "flex",
+              justifyContent: "center",
+              overflow: "hidden" // Oculta qualquer parte do botão que ultrapasse o contêiner
+            }}
+          ></div>
+          <button 
+            type="button" 
+            className="btn btn-primary w-100 mb-3" 
+            onClick={handleFacebookLogin} 
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#FFFFFF",
+              backgroundColor: "#1877F2",
+              border: "none",
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+              padding: "10px 0",
+              position: "relative" // Necessário para posicionar o ícone
+            }}
+          >{/* Botao do FACEBOOK */}
+            <i 
+              className="fab fa-facebook-f " 
+              style={{ 
+                fontSize: "20px", 
+                color: "#FFFFFF", 
+                position: "absolute", 
+                left: "14px" // Ajusta a posição à esquerda
+              }} 
+            ></i>
+            <span className="ms-3" style={{ fontSize: "15px", }}>Continue com Facebook</span>
           </button>
-          <div id="signInDiv"></div>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
