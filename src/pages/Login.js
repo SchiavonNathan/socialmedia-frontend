@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { jwtDecode } from 'jwt-decode';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -34,9 +36,41 @@ const Login = () => {
     window.location.href = 'http://localhost:3001/auth/facebook';
   };
 
-  const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:3001/google';
-  };
+  //------------------------google--------------------------------------
+  function handleCallbackResponse(response){
+    console.log("TOKEN JWT ENCODED: " + response.credential)
+    var userObject = jwtDecode(response.credential)
+    console.log(userObject);
+
+    axios.post('http://localhost:3001/users/googlelogin', {
+      email: userObject.email,
+      given_name: userObject.given_name,
+      family_name: userObject.family_name,
+      picture: userObject.picture,
+    })
+    .then(res => {
+        localStorage.setItem('user_id', res.data[0].id);
+        console.log("Resposta do backend: ", res.data);
+        alert(`Login bem-sucedido! token`);
+        navigate('/home');
+    })
+    .catch(err => {
+        console.error("Erro ao enviar dados para o backend: ", err);
+    });
+  }
+
+  useEffect(() => {
+    /* global google*/
+    google.accounts.id.initialize({
+      client_id: "469880395067-2ui4fsi0lk3kvrvlo2fkemk4tv75jifb.apps.googleusercontent.com",
+      callback: handleCallbackResponse
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById("signInDiv"),
+      {theme: "filled_blue", size: "medium"}
+    )
+  }, [])
 
   return (
     <div className="container-fluid d-flex align-items-center justify-content-center vh-100 cadastro-login">
@@ -46,9 +80,7 @@ const Login = () => {
           <button type="button" className="btn btn-primary me-2" onClick={handleFacebookLogin}>
             <i className="fab fa-facebook-f me-2"></i>Continue com Facebook
           </button>
-          <button type="button" className="btn btn-danger" onClick={handleGoogleLogin}>
-            <i className="fab fa-google me-2"></i>Continue com Google
-          </button>
+          <div id="signInDiv"></div>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
