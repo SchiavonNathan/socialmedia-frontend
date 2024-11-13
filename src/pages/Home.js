@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import '../styles/Posts.css';
+import { Button, Card, Container, Row, Col, Modal, Form } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -12,8 +13,6 @@ const Home = () => {
   const [postagemEditando, setPostagemEditando] = useState(null);
   const [menuAtivo, setMenuAtivo] = useState(null);
   const userId = localStorage.getItem('user_id');
-
-  // Referência para o menu
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -81,97 +80,120 @@ const Home = () => {
     }).catch(error => console.error('Erro ao copiar link', error));
   };
 
-  // Fecha o menu de opções ao clicar fora
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setMenuAtivo(null);
-      }
-    };
+  const handleReportPost = (postagemId) => {
+    // Aqui você pode adicionar a lógica para a ação de denunciar, como abrir um modal ou enviar uma requisição
+    alert(`Postagem ${postagemId} denunciada!`);
+  };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
+  // HTML ==================================================================================================  
   return (
-    <div className="container">
-      <div className="cardHome">
-        <h2>Bem-vindo à Home</h2>
-        {user ? (
-          <div>
-            <p>Nome: {user.name}</p>
-            <p>Email: {user.email}</p>
-          </div>
-        ) : (
-          <p>Carregando dados...</p>
-        )}
-
-        <h2>Postagens Recentes</h2>
-        {postagens.length > 0 ? (
-          postagens.map(postagem => (
-            <div className='campoPostagem'>
-              <div key={postagem.id} className="postagem">
-                <hr className="divider" />
-                <div className="postagem-header">
-                  <div className='titulo-opcoes'>
-                    <p className="postagem-titulo"><strong>{postagem.titulo}</strong></p>
-                    <button className="menu-button" onClick={() => setMenuAtivo(menuAtivo === postagem.id ? null : postagem.id)}>⋮</button>
-                  </div>
-                  {menuAtivo === postagem.id && (
-                    <div className="menu-opcoes" ref={menuRef}>
-                      {postagem.usuario.id === parseInt(userId) && (
-                        <>
-                          <button onClick={() => abrirModalParaEdicao(postagem)}>Editar</button>
-                          <button onClick={() => handleDeletePost(postagem.id)}>Excluir</button>
-                        </>
-                      )}
-                      {postagem.usuario.id !== parseInt(userId) && (
-                        <button>Denunciar</button>
-                      )}
-                      <button onClick={() => handleCopyLink(postagem.id)}>Copiar Link</button>
-                    </div>
-                  )}
-                </div>
-                <p><strong>{postagem.usuario.name}</strong> - {new Date(postagem.data_criacao).toLocaleDateString()} {new Date(postagem.data_criacao).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                <p>{postagem.conteudo}</p>
-                <p><strong>Tags:</strong> {postagem.tags}</p>
-              </div>
+  <div className="cadastro-login">
+    <Container className="my-5 cinza">
+      <Row className="justify-content-center">
+        <Col md={8} className="text-center">
+          <h2 className="text-primary">Bem-vindo à Home</h2>
+          {user ? (
+            <div>
+              <p>Nome: {user.name}</p>
+              <p>Email: {user.email}</p>
             </div>
+          ) : (
+            <p>Carregando dados...</p>
+          )}
+        </Col>
+      </Row>
+
+      <Row>
+        <h3 className="text-center my-4 text-success">Postagens Recentes</h3>
+        {postagens.length > 0 ? (
+          postagens.map((postagem) => (
+            <Col md={4} className="mb-4" key={postagem.id}>
+              <Card className="shadow-sm">
+                <Card.Body>
+                  <Card.Title className="text-truncate" title={postagem.titulo}>{postagem.titulo}</Card.Title>
+                  <Card.Text className="text-muted">
+                    <small>{postagem.usuario.name} - {new Date(postagem.data_criacao).toLocaleDateString()}</small>
+                  </Card.Text>
+                  <Card.Text>{postagem.conteudo}</Card.Text>
+                  <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
+                  
+                  {/* Verificação de usuário: exibe botões de edição/exclusão para o autor */}
+                  {postagem.usuario.id === parseInt(userId) ? (
+                    <>
+                      <Button variant="outline-secondary" onClick={() => abrirModalParaEdicao(postagem)} className="me-2">Editar</Button>
+                      <Button variant="outline-danger" onClick={() => handleDeletePost(postagem.id)} className="me-2" >Excluir</Button>
+                    </>
+                  ) : (
+                    // Exibe o botão "Denunciar" para usuários que não são o autor da postagem
+                    <Button variant="outline-warning" onClick={() => handleReportPost(postagem.id)} className="me-2">Denunciar</Button>
+                  )}
+                  
+                  <Button variant="outline-info" onClick={() => handleCopyLink(postagem.id)} className="me-2">Copiar Link</Button>
+                </Card.Body>
+              </Card>
+            </Col>
           ))
         ) : (
-          <p>Carregando postagens...</p>
+          <p className="text-center">Carregando postagens...</p>
         )}
-      </div>
+      </Row>
 
-      <button className="create-post-button" onClick={abrirModalParaCriacao}>+</button>
+      <Button
+        className="position-fixed bottom-0 end-0 m-3"
+        onClick={abrirModalParaCriacao}
+        variant="success"
+        style={{ borderRadius: '50%', width: '70px', height: '70px', fontSize: '40px', lineHeight: '1.2' }}
+      >
+        +
+      </Button>
 
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>{postagemEditando ? "Editar Postagem" : "Criar Nova Postagem"}</h3>
-            <input
-              type="text"
-              placeholder="Título"
-              value={titulo}
-              onChange={(e) => setTitulo(e.target.value)}
-            />
-            <textarea
-              placeholder="Conteúdo"
-              value={conteudo}
-              onChange={(e) => setConteudo(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Tags (separadas por vírgula)"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-            />
-            <button onClick={handleCreateOrUpdatePost}>{postagemEditando ? "Atualizar" : "Publicar"}</button>
-            <button onClick={() => setIsModalOpen(false)}>Cancelar</button>
-          </div>
-        </div>
-      )}
-    </div>
+      <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>{postagemEditando ? "Editar Postagem" : "Criar Nova Postagem"}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.Label>Título</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Título"
+                value={titulo}
+                onChange={(e) => setTitulo(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mt-3">
+              <Form.Label>Conteúdo</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Conteúdo"
+                value={conteudo}
+                onChange={(e) => setConteudo(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mt-3">
+              <Form.Label>Tags (separadas por vírgula)</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Tags"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={handleCreateOrUpdatePost}>
+            {postagemEditando ? "Atualizar" : "Publicar"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </Container>
+  </div>  
   );
 };
 

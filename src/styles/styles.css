@@ -1,358 +1,57 @@
-/* Estilo geral */
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-body, html {
-    height: 100%;
+
+/* Resetando o body e html */
+*,
+*::before,
+*::after {
     margin: 0;
-    font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(135deg, #643890, #017D6F);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #FFF;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}
-
-/* Estilo do container principal */
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+html, body {
     width: 100%;
-    color: #FFF;
+    height: 100%;
     overflow: hidden;
 }
 
-/* Estilo do card */
-.card, .cardHome {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    background-color: #E0F7F4;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    color: #000;
+/* Estilo geral da página de login e cadastro */
+.cadastro-login {
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(135deg, #643890, #017D6F);
+  color: #FFF;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.card h2, .cardHome h2 {
-    color: #017D6F;
-    font-family: 'Pacifico', cursive;
-    text-align: center;
-    margin-bottom: 15px;
+/* Card de Login/Cadastro */
+.cadastro-login .card {
+  width: 100%;
+  max-width: 400px; /* Limite máximo para o formulário */
+  background-color: #E0F7F4;
+  color: #000;
 }
 
-/* Estilo da barra de rolagem do cardHome */
-.cardHome {
-    overflow-y: auto;
-    height: 100%;
+/* Títulos */
+.cadastro-login .card h2 {
+  font-family: 'Pacifico', cursive;
+  color: #017D6F;
 }
 
-.cardHome::-webkit-scrollbar {
-    width: 10px;
+/* Link de redirecionamento */
+.cadastro-login .btn-link {
+  color: #017D6F;
+  text-decoration: none;
 }
 
-.cardHome::-webkit-scrollbar-track {
-    background: #E0F7F4;
-    border-radius: 8px;
+/* Estilo da mensagem de erro */
+.cadastro-login .text-danger {
+  color: #FF6F61 !important;
 }
 
-.cardHome::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 8px;
-    border: 2px solid #f1f1f1;
-}
-
-.cardHome::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa;
-}
-
-/* Estilo de postagem */
-.campoPostagem {
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    border-radius: 10px;
-}
-
-.campoPostagem:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    transform: scale(1.01);
-}
-
-.postagem {
-    margin: 0 20px;
-    padding-bottom: 5px;
-}
-
-.postagem-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background-color 0.3s ease;
-}
-
-.postagem-header:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.divider {
-    border: none;
-    border-top: 1px solid #000;
-}
-
-.titulo-opcoes {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-    flex-direction: row;
-}
-
-/* Botão de criação de nova postagem */
-.create-post-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background-color: #fff;
-    color: #017D6F;
-    font-size: 40px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s;
-}
-
-.create-post-button:hover {
-    background-color: #E0F7F4;
-}
-
-/* Estilos do modal */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.modal-content h3 {
-    margin-top: 0;
-    color: #017D6F;
-}
-
-.modal-content input,
-.modal-content textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.modal-content button {
-    padding: 10px;
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    background-color: #01B392;
-    color: white;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.modal-content button:hover {
-    background-color: #017D6F;
-}
-
-/* Botão de menu de três pontinhos */
-.menu-button {
-    background: none;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-    border-radius: 10px;
-}
-
-.menu-button:hover {
-    background-color: #0000001f;
-}
-
-/* Menu de opções */
-.menu-opcoes {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.menu-opcoes button {
-    background: none;
-    border: none;
-    padding: 10px;
-    text-align: left;
-    cursor: pointer;
-    width: 100%;
-}
-
-.menu-opcoes button:hover {
-    background-color: #f2f2f2;
-}
-
-/* Formulários */
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #444;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.form-group input#name {
-    border-color: #FF6F61;
-}
-
-.form-group input#email {
-    border-color: #4B89DC;
-}
-
-.form-group input#password {
-    border-color: #01B392;
-}
-
-/* Estilos gerais para botões */
-button[type="submit"], .btn-social {
-    width: 100%;
-    background-color: #01B392;
-    color: #FFF;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 10px;
-}
-
-button[type="submit"]:hover, .btn-social:hover {
-    background-color: #017D6F;
-}
-
-/* Links */
-.btn-link {
-    color: #017D6F;
-    font-family: 'Pacifico', cursive;
-    text-align: center;
-    display: block;
-    margin-top: 20px;
-    text-decoration: none;
-}
-
-.btn-link i {
-    margin-right: 5px;
-}
-
-/* Social buttons */
-.social-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
-
-.social-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #4267B2;
-    border-radius: 30px;
-    padding: 10px;
-    color: #FFF;
-    text-decoration: none;
-    width: 48%;
-    transition: background-color 0.3s;
-    border: 1px solid #014039;
-}
-
-.social-button.google {
-    background-color: #DB4437;
-}
-
-.social-button i {
-    margin-right: 10px;
-}
-
-.social-button:hover {
-    background-color: #345185;
-}
-
-.social-button.google:hover {
-    background-color: #C33D2A;
-}
-
-/* App specific styles */
-.App {
-    text-align: center;
-}
-
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
-}
-
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
-
-.App-link {
-    color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.cinza{
+  background-color: #00000046;
 }
