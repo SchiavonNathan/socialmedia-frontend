@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+
 
 /* Global */
 *,
@@ -19,10 +21,22 @@ html, body {
 }
 
 .Pacifico {
-  font-family: 'Pacifico', cursive;
-  color: #017D6F;
+  font-family: 'Outfit', cursive;
+  font-size: 60px;
+  color: #00438f;
   text-shadow: #000;
 }
+.Rafinha {
+  padding-bottom: 22px;
+  font-family: 'Pacifico', cursive;
+  font-size: 50px;
+  background: linear-gradient(135deg, #9532f8, #1bbba9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.167); 
+}
+
 
 /* Paginas de Login e Cadastro  ==============================================================*/
 .cadastro-login {
