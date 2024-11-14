@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
-/* Resetando o body e html */
+/* Global */
 *,
 *::before,
 *::after {
@@ -12,12 +12,19 @@
 html, body {
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    overflow: auto;
 }
 .fundo{
   background: linear-gradient(135deg, #643890, #017D6F);
 }
-/* Estilo geral da página de login e cadastro */
+
+.Pacifico {
+  font-family: 'Pacifico', cursive;
+  color: #017D6F;
+  text-shadow: #000;
+}
+
+/* Paginas de Login e Cadastro  ==============================================================*/
 .cadastro-login {
   font-family: 'Montserrat', sans-serif;
   background: linear-gradient(135deg, #643890, #017D6F);
@@ -28,46 +35,56 @@ html, body {
   align-items: center;
   justify-content: center;
 }
-
-/* Card de Login/Cadastro */
 .cadastro-login .card {
   width: 100%;
-  max-width: 400px; /* Limite máximo para o formulário */
+  max-width: 400px; 
   background-color: #E0F7F4;
   color: #000;
 }
-
-/* Títulos */
 .cadastro-login .card h2 {
   font-family: 'Pacifico', cursive;
   color: #017D6F;
 }
-
-/* Link de redirecionamento */
 .cadastro-login .btn-link {
   color: #017D6F;
   text-decoration: none;
 }
-
-/* Estilo da mensagem de erro */
+#googleButtonContainer > div {
+  transform: scale(1); 
+  transform-origin: center; 
+  width: 100%; 
+  max-width: none; 
+}
 .cadastro-login .text-danger {
   color: #FF6F61 !important;
 }
 
-/* No arquivo CSS */
+/* Container de Postagens ====================================================================*/
 .cinza {
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color:white ;
+  max-width: 670px;
+  margin: 40px auto 40px auto; 
+  background-color: #ffffffa7;
+  padding: 20px; 
+  border-radius: 50px; 
+  box-shadow: 0 4px 8px rgb(0, 0, 0); 
 }
 
 
-#googleButtonContainer > div {
-  transform: scale(1); /* Aumenta o tamanho do botão */
-  transform-origin: center; /* Centraliza o crescimento */
-  width: 100%; /* Garante que o botão ocupe a largura do contêiner */
-  max-width: none; /* Remove limite de largura do botão */
+
+/* Scroll */
+::-webkit-scrollbar {
+  width: 10px; 
 }
-
-
+::-webkit-scrollbar-track {
+  background: #fffdfdb0; 
+  border-radius: 10px; 
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #643890, #017D6F);
+  border-radius: 10px;
+  border: 1px solid transparent; 
+  background-clip: padding-box; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #4800ff; 
+}

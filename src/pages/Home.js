@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Button, Card, Container, Row, Col, Modal, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import PublicacaoComponent from '../components/PublicacaoComponent';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -88,10 +91,10 @@ const Home = () => {
   // HTML ==================================================================================================  
   return (
   <div className="cinza">
-    <Container className="ps-5 pe-5">
-      <Row className="justify-content-center">
+    <Container className="ps-4 pe-2">
+    <Row className="justify-content-center">
         <Col md={8} className="text-center">
-          <h2 className="text-primary mt-4 fs-1">Bem-vindo à Home</h2>
+          <h2 className="Pacifico mt-4 fs-1">BlogRafinha</h2>
           {user ? (
             <div>
               <p>Nome: {user.name}</p>
@@ -102,14 +105,28 @@ const Home = () => {
           )}
         </Col>
       </Row>
-
-      <div style={{ maxHeight: '85vh', overflowY: 'auto' }}>
+      
+      
+      <PublicacaoComponent 
+        user={user} 
+        isModalOpen={isModalOpen} 
+        setIsModalOpen={setIsModalOpen} 
+      />
+        
+        <div className='pt-3' style={{ maxHeight: '100vh', overflowY: 'auto', paddingRight: '10px' }}>
         <Row >
-          <h3 className="text-center my-4 text-success">Postagens Recentes</h3>
           {postagens.length > 0 ? (
             postagens.map((postagem) => (
               <Col md={12} className="mb-4 d-flex justify-content-center " key={postagem.id}>
-                  <Card className="shadow-sm w-100 " style={{ maxWidth: '650px' }}>                  <Card.Body>
+                <div className="w-100 p-4 " 
+                     style={{ 
+                          maxWidth: '570px',
+                          borderRadius: '2%', 
+                          backgroundColor: '#f1f1f1',
+                          border: '1px solid #6634',
+                          boxShadow: '1px 1px 10px rgba(0, 0, 0, 0.3)'
+                          }}>                  
+                  <Card.Body>
                     <Card.Title className="fs-1">{postagem.titulo}</Card.Title>
                     <Card.Text className="text-muted">
                       <small>{postagem.usuario.name} - {new Date(postagem.data_criacao).toLocaleDateString()}</small>
@@ -128,7 +145,7 @@ const Home = () => {
                     
                     <Button variant="outline-info" onClick={() => handleCopyLink(postagem.id)} className="me-2">Copiar Link</Button>
                   </Card.Body>
-                </Card>
+                </div>
               </Col>
             ))
           ) : (
@@ -137,15 +154,18 @@ const Home = () => {
         </Row>
       </div>
 
-
-
       <Button
-        className="position-fixed bottom-0 end-0 m-3"
+        className="d-flex justify-content-center align-items-center position-fixed bottom-0 end-0 m-4 bg-danger"
         onClick={abrirModalParaCriacao}
         variant="success"
-        style={{ borderRadius: '50%', width: '70px', height: '70px', fontSize: '40px', lineHeight: '1.2' }}
+        style={{
+          borderRadius: '100%',
+          width: '60px',
+          height: '60px',
+          fontSize: '50px', 
+        }}
       >
-        +
+        <FontAwesomeIcon icon={faPlus} style={{ fontSize: '30px' }} /> {/* Ícone centralizado */}
       </Button>
 
       <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} centered>
