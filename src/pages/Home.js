@@ -177,14 +177,45 @@ const Home = () => {
         </Button>
 
         {/* Offcanvas para Menu Lateral com Conteúdo do UserSidebar */}
-        <Offcanvas show={showOffcanvas} onHide={() => setShowOffcanvas(false)} placement="start">
-          <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Menu</Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
-            <UserSidebar user={user} onSearch={() => {}} />
-          </Offcanvas.Body>
-        </Offcanvas>
+        <Offcanvas
+  style={{ backgroundColor: '#000000a5' }}
+  show={showOffcanvas}
+  onHide={() => setShowOffcanvas(false)}
+  placement="start"
+  className="offcanvas-responsive"
+>
+  <Offcanvas.Header className="d-flex align-items-center justify-content-between">
+    <div className="d-flex align-items-center w-100 justify-content-between">
+      <Offcanvas.Title className="text-white fs-5 mb-0">Menu</Offcanvas.Title>
+      <button
+        type="button"
+        className="btn-close btn-close-white"
+        onClick={() => setShowOffcanvas(false)}
+        aria-label="Close"
+      />
+    </div>
+  </Offcanvas.Header>
+  <Offcanvas.Body className="d-flex flex-column align-items-center px-6 py-3">
+    <UserSidebar
+      user={user}
+      onSearch={() => {}}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        padding: '0.5rem',
+        fontSize: '0.9rem',
+        overflowY: 'auto',
+        width: '80%', // Reduz a largura para 80%
+        maxWidth: '200px', // Limita a largura máxima para telas maiores
+      }}
+      className="d-flex pe-5"
+    />
+  </Offcanvas.Body>
+</Offcanvas>
+
+
+
+
 
         {/* Modal para Criação/Edição de Postagem */}
         <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} centered>
