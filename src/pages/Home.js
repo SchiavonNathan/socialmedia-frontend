@@ -87,11 +87,11 @@ const Home = () => {
 
   // HTML ==================================================================================================  
   return (
-  <div className="cadastro-login">
-    <Container className="my-5 cinza">
+  <div className="cinza">
+    <Container className="ps-5 pe-5">
       <Row className="justify-content-center">
         <Col md={8} className="text-center">
-          <h2 className="text-primary">Bem-vindo à Home</h2>
+          <h2 className="text-primary mt-4 fs-1">Bem-vindo à Home</h2>
           {user ? (
             <div>
               <p>Nome: {user.name}</p>
@@ -103,40 +103,41 @@ const Home = () => {
         </Col>
       </Row>
 
-      <Row>
-        <h3 className="text-center my-4 text-success">Postagens Recentes</h3>
-        {postagens.length > 0 ? (
-          postagens.map((postagem) => (
-            <Col md={4} className="mb-4" key={postagem.id}>
-              <Card className="shadow-sm">
-                <Card.Body>
-                  <Card.Title className="text-truncate" title={postagem.titulo}>{postagem.titulo}</Card.Title>
-                  <Card.Text className="text-muted">
-                    <small>{postagem.usuario.name} - {new Date(postagem.data_criacao).toLocaleDateString()}</small>
-                  </Card.Text>
-                  <Card.Text>{postagem.conteudo}</Card.Text>
-                  <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
-                  
-                  {/* Verificação de usuário: exibe botões de edição/exclusão para o autor */}
-                  {postagem.usuario.id === parseInt(userId) ? (
-                    <>
-                      <Button variant="outline-secondary" onClick={() => abrirModalParaEdicao(postagem)} className="me-2">Editar</Button>
-                      <Button variant="outline-danger" onClick={() => handleDeletePost(postagem.id)} className="me-2" >Excluir</Button>
-                    </>
-                  ) : (
-                    // Exibe o botão "Denunciar" para usuários que não são o autor da postagem
-                    <Button variant="outline-warning" onClick={() => handleReportPost(postagem.id)} className="me-2">Denunciar</Button>
-                  )}
-                  
-                  <Button variant="outline-info" onClick={() => handleCopyLink(postagem.id)} className="me-2">Copiar Link</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))
-        ) : (
-          <p className="text-center">Carregando postagens...</p>
-        )}
-      </Row>
+      <div style={{ maxHeight: '85vh', overflowY: 'auto' }}>
+        <Row >
+          <h3 className="text-center my-4 text-success">Postagens Recentes</h3>
+          {postagens.length > 0 ? (
+            postagens.map((postagem) => (
+              <Col md={12} className="mb-4 d-flex justify-content-center " key={postagem.id}>
+                  <Card className="shadow-sm w-100 " style={{ maxWidth: '650px' }}>                  <Card.Body>
+                    <Card.Title className="fs-1">{postagem.titulo}</Card.Title>
+                    <Card.Text className="text-muted">
+                      <small>{postagem.usuario.name} - {new Date(postagem.data_criacao).toLocaleDateString()}</small>
+                    </Card.Text>
+                    <Card.Text>{postagem.conteudo}</Card.Text>
+                    <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
+
+                    {postagem.usuario.id === parseInt(userId) ? (
+                      <>
+                        <Button variant="outline-secondary" onClick={() => abrirModalParaEdicao(postagem)} className="me-2">Editar</Button>
+                        <Button variant="outline-danger" onClick={() => handleDeletePost(postagem.id)} className="me-2">Excluir</Button>
+                      </>
+                    ) : (
+                      <Button variant="outline-warning" onClick={() => handleReportPost(postagem.id)} className="me-2">Denunciar</Button>
+                    )}
+                    
+                    <Button variant="outline-info" onClick={() => handleCopyLink(postagem.id)} className="me-2">Copiar Link</Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))
+          ) : (
+            <p className="text-center">Carregando postagens...</p>
+          )}
+        </Row>
+      </div>
+
+
 
       <Button
         className="position-fixed bottom-0 end-0 m-3"

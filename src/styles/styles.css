@@ -14,7 +14,9 @@ html, body {
     height: 100%;
     overflow: hidden;
 }
-
+.fundo{
+  background: linear-gradient(135deg, #643890, #017D6F);
+}
 /* Estilo geral da página de login e cadastro */
 .cadastro-login {
   font-family: 'Montserrat', sans-serif;
@@ -52,9 +54,14 @@ html, body {
   color: #FF6F61 !important;
 }
 
-.cinza{
-  background-color: #00000046;
+/* No arquivo CSS */
+.cinza {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color:white ;
 }
+
 
 #googleButtonContainer > div {
   transform: scale(1); /* Aumenta o tamanho do botão */
@@ -62,3 +69,5 @@ html, body {
   width: 100%; /* Garante que o botão ocupe a largura do contêiner */
   max-width: none; /* Remove limite de largura do botão */
 }
+
+
