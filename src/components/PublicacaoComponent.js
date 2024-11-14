@@ -20,6 +20,7 @@ function PublicacaoComponent({ user, isModalOpen, setIsModalOpen }) {
         height: '40px',
         borderRadius: '50%',
         objectFit: 'cover',
+        margin: '10px'
     },
     defaultProfileImg: {
         width: '40px',  
