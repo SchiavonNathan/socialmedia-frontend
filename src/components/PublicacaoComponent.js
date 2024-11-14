@@ -63,7 +63,7 @@ function PublicacaoComponent({ user, isModalOpen, setIsModalOpen }) {
         <Col xs={1} className="p-0">
             {user ? (
                 <img
-                src={user.profilePicture} // Substitua por user.profilePicture ou outro campo de imagem
+                src={user.fotoPerfil}
                 alt="Perfil"
                 style={styles.profileImg}
                 />

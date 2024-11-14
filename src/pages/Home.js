@@ -105,8 +105,7 @@ const Home = () => {
           )}
         </Col>
       </Row>
-      
-      
+       
       <PublicacaoComponent 
         user={user} 
         isModalOpen={isModalOpen} 
