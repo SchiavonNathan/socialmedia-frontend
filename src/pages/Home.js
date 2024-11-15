@@ -15,6 +15,7 @@ const Home = () => {
   const [titulo, setTitulo] = useState("");
   const [conteudo, setConteudo] = useState("");
   const [tags, setTags] = useState("");
+  const [foto, setFoto] = useState("");
   const [postagemEditando, setPostagemEditando] = useState(null);
   const userId = localStorage.getItem('user_id');
 
@@ -36,6 +37,7 @@ const Home = () => {
     setTitulo("");
     setConteudo("");
     setTags("");
+    setFoto("");
     setPostagemEditando(null);
     setIsModalOpen(true);
   };
@@ -44,12 +46,13 @@ const Home = () => {
     setTitulo(postagem.titulo);
     setConteudo(postagem.conteudo);
     setTags(postagem.tags);
+    setFoto(postagem.foto);
     setPostagemEditando(postagem.id);
     setIsModalOpen(true);
   };
 
   const handleCreateOrUpdatePost = () => {
-    const newPost = { titulo, conteudo, tags, usuarioId: userId };
+    const newPost = { titulo, conteudo, tags, usuarioId: userId, foto };
     if (postagemEditando) {
       axios.put(`http://localhost:3001/postagens/${postagemEditando}`, newPost)
         .then(response => {
@@ -126,6 +129,7 @@ const Home = () => {
                       </Card.Text>
                       <Card.Text>{postagem.conteudo}</Card.Text>
                       <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
+                      <img src={postagem.foto} alt="img" style={{ width: '100%', height: 'auto', paddingBottom: '15px' }} />
 
                       {postagem.usuario.id === parseInt(userId) ? (
                         <>
@@ -246,6 +250,15 @@ const Home = () => {
                     placeholder="Tags"
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group className="mt-3">
+                  <Form.Label>Imagem (URL)</Form.Label>
+                  <Form.Control 
+                    type="text"
+                    placeholder="Imagem"
+                    value={foto}
+                    onChange={(e) => setFoto(e.target.value)}
                   />
                 </Form.Group>
               </Form>
