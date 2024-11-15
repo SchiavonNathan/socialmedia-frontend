@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Col, Row, Button, InputGroup, FormControl } from 'react-bootstrap';
 
-function UserSidebar({ user, onSearch }) {
+function UserSidebar({ user, onSearch, setonSearch}) {
     const styles = {
         sidebar: {
           maxWidth: '340px',
@@ -40,6 +40,10 @@ function UserSidebar({ user, onSearch }) {
         },
       };
 
+      function teste(){
+        console.log(onSearch)
+      }
+
   return (
     <Container style={styles.sidebar}>
         <div style={styles.userInfo}>
@@ -70,10 +74,11 @@ function UserSidebar({ user, onSearch }) {
           placeholder="Pesquisar publicações..."
           aria-label="Pesquisar publicações"
           style={styles.searchBox}
-          onChange={(e) => onSearch(e.target.value)}
+          value={onSearch}
+          onChange={(e) => setonSearch(e.target.value)}
         />
         <InputGroup.Text style={styles.searchIcon}>
-          🔍
+          🔍<Button type='submit' onClick={teste}></Button>
         </InputGroup.Text>
       </InputGroup>
     </Container>

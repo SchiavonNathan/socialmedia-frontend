@@ -17,6 +17,7 @@ const Home = () => {
   const [tags, setTags] = useState("");
   const [foto, setFoto] = useState("");
   const [postagemEditando, setPostagemEditando] = useState(null);
+  const [onSearch, setonSearch] = useState(null);
   const userId = localStorage.getItem('user_id');
 
   useEffect(() => {
@@ -100,7 +101,11 @@ const Home = () => {
         
         {/* Sidebar à esquerda, oculto em telas menores */}
         <Col md={3} className="d-none d-md-block">
-          <UserSidebar user={user} onSearch={() => {}} />
+          <UserSidebar 
+            user={user} 
+            onSearch={onSearch}
+            setonSearch={setonSearch} 
+          />
         </Col>
 
         <PublicacaoComponent 
