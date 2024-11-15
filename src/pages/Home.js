@@ -172,97 +172,94 @@ const Home = () => {
             height: '60px',
             fontSize: '30px',
           }}
-        >
+          >
           <FontAwesomeIcon icon={faBars} style={{ fontSize: '24px' }} />
         </Button>
 
         {/* Offcanvas para Menu Lateral com Conteúdo do UserSidebar */}
-        <Offcanvas
-  style={{ backgroundColor: '#000000a5' }}
-  show={showOffcanvas}
-  onHide={() => setShowOffcanvas(false)}
-  placement="start"
-  className="offcanvas-responsive"
->
-  <Offcanvas.Header className="d-flex align-items-center justify-content-between">
-    <div className="d-flex align-items-center w-100 justify-content-between">
-      <Offcanvas.Title className="text-white fs-5 mb-0">Menu</Offcanvas.Title>
-      <button
-        type="button"
-        className="btn-close btn-close-white"
-        onClick={() => setShowOffcanvas(false)}
-        aria-label="Close"
-      />
-    </div>
-  </Offcanvas.Header>
-  <Offcanvas.Body className="d-flex flex-column align-items-center px-6 py-3">
-    <UserSidebar
-      user={user}
-      onSearch={() => {}}
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '0.5rem',
-        fontSize: '0.9rem',
-        overflowY: 'auto',
-        width: '80%', // Reduz a largura para 80%
-        maxWidth: '200px', // Limita a largura máxima para telas maiores
-      }}
-      className="d-flex pe-5"
-    />
-  </Offcanvas.Body>
-</Offcanvas>
-
-
-
-
-
-        {/* Modal para Criação/Edição de Postagem */}
-        <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} centered>
-          <Modal.Header closeButton>
-            <Modal.Title>{postagemEditando ? "Editar Postagem" : "Criar Nova Postagem"}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group>
-                <Form.Label>Título</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Título"
-                  value={titulo}
-                  onChange={(e) => setTitulo(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group className="mt-3">
-                <Form.Label>Conteúdo</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  placeholder="Conteúdo"
-                  value={conteudo}
-                  onChange={(e) => setConteudo(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group className="mt-3">
-                <Form.Label>Tags (separadas por vírgula)</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Tags"
-                  value={tags}
-                  onChange={(e) => setTags(e.target.value)}
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
-              Cancelar
-            </Button>
-            <Button variant="primary" onClick={handleCreateOrUpdatePost}>
-              {postagemEditando ? "Salvar Alterações" : "Criar Postagem"}
-            </Button>
-          </Modal.Footer>
-        </Modal>
+      <Offcanvas
+          style={{ backgroundColor: '#000000a5' }}
+          show={showOffcanvas}
+          onHide={() => setShowOffcanvas(false)}
+          placement="start"
+          className="offcanvas-responsive"
+        >
+        <Offcanvas.Header className="d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center w-100 justify-content-between">
+            <Offcanvas.Title className="text-white fs-5 mb-0">Menu</Offcanvas.Title>
+            <button
+              type="button"
+              className="btn-close btn-close-white"
+              onClick={() => setShowOffcanvas(false)}
+              aria-label="Close"
+            />
+          </div>
+        </Offcanvas.Header>
+          <Offcanvas.Body className="d-flex flex-column align-items-center px-6 py-3">
+            <UserSidebar
+              user={user}
+              onSearch={() => {}}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                padding: '0.5rem',
+                fontSize: '0.9rem',
+                overflowY: 'auto',
+                width: '80%', // Reduz a largura para 80%
+                maxWidth: '200px', // Limita a largura máxima para telas maiores
+              }}
+              className="d-flex pe-5"
+            />
+          </Offcanvas.Body>
+      </Offcanvas>
+        <div className='borderPurple'>
+          {/* Modal para Criação/Edição de Postagem */}
+          <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} centered >
+            <Modal.Header className='text-white blackRgb ' closeButton>
+              <Modal.Title >{postagemEditando ? "Editar Postagem" : "Criar Nova Postagem"}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className='bg-black'>
+              <Form className='text-white'>
+                <Form.Group>
+                  <Form.Label>Título</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Título"
+                    value={titulo}
+                    onChange={(e) => setTitulo(e.target.value)}
+                  />
+                  </Form.Group>
+                  <Form.Group >
+                  <Form.Label>Conteúdo</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    placeholder="Conteúdo"
+                    value={conteudo}
+                    onChange={(e) => setConteudo(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group className="mt-3">
+                  <Form.Label>Tags (separadas por vírgula)</Form.Label>
+                  <Form.Control 
+                    type="text"
+                    placeholder="Tags"
+                    value={tags}
+                    onChange={(e) => setTags(e.target.value)}
+                  />
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer className='blackRgb'>
+              <Button variant="danger" onClick={() => setIsModalOpen(false)}>
+                Cancelar
+              </Button>
+              <Button variant="primary" onClick={handleCreateOrUpdatePost}>
+                {postagemEditando ? "Salvar Alterações" : "Criar Postagem"}
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
       </Container>
     </div>
   );

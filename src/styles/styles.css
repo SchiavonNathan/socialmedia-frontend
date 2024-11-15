@@ -17,7 +17,7 @@ html, body {
     overflow: auto;
 }
 .fundo{
-  background: linear-gradient(135deg, #643890, #017D6F);
+  background: linear-gradient(135deg, #361b52, #005e53);
 }
 
 .Pacifico {
@@ -84,8 +84,42 @@ html, body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.855); 
 }
 
+.blackRgb{
+  background-color: #000000e2 !important;
+}
 
-
+/* Modal Criar Uma Postagem ----------------------------------------------------------------------*/
+.modal-content {
+  border: 2px solid purple !important; 
+}
+.modal-header, .modal-footer {
+  border-color: black !important; 
+}
+.modal-header, .modal-footer {
+  border: none !important;
+}
+.modal-body input,
+.modal-body textarea {
+  background-color: #292929e2; 
+  color: white; 
+  border: 1px solid #444; 
+}
+.modal-body input::placeholder,
+.modal-body textarea::placeholder {
+  color: white; 
+  opacity: 0.9!important; 
+}
+.modal-body input:focus,
+.modal-body textarea:focus {
+  background-color: #000000e2; 
+  color: white; 
+  border-color: #444; 
+  box-shadow: none; 
+}
+.modal-header .btn-close {
+  filter: brightness(0) invert(1);
+}
+/* --------------------------------------------------------------- */
 /* Scroll */
 ::-webkit-scrollbar {
   width: 10px; 
