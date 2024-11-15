@@ -8,8 +8,8 @@ function PublicacaoComponent({ user, isModalOpen, setIsModalOpen }) {
   const styles = {
     container: {
       maxWidth: '595px',
-      background: '#f2f2f2',
-      border: '1px solid #6634',
+      background: 'black',
+      border: '1px solid gray',
       borderRadius: '8px',
       padding: '10px',
       margin: '0 auto',
@@ -40,12 +40,12 @@ function PublicacaoComponent({ user, isModalOpen, setIsModalOpen }) {
       userSelect: 'none',
       caretColor: 'transparent',
       borderRadius: '30px',
-      backgroundColor: '#f1f1f1',
+      backgroundColor: '#212121c6',
       width: '100%',
     },
     optionText: {
       fontSize: '0.9rem',
-      color: '#666',
+      color: 'white',
       marginLeft: '5px',
     },
     optionContainer: {
@@ -76,8 +76,8 @@ function PublicacaoComponent({ user, isModalOpen, setIsModalOpen }) {
         </Col>
 
         
-        <Col xs={11}>
-          <textarea
+        <Col  xs={11}>
+          <textarea 
             style={styles.textarea}
             placeholder="Comece uma publicação"
             rows="1"
@@ -89,15 +89,15 @@ function PublicacaoComponent({ user, isModalOpen, setIsModalOpen }) {
 
       <Row style={styles.optionContainer}>
         <Col xs={4}>
-          <FontAwesomeIcon icon={faImage} />
+          <FontAwesomeIcon style={styles.optionText}   icon={faImage} />
           <span style={styles.optionText}>Imagem</span>
         </Col>
         <Col xs={4}>
-          <FontAwesomeIcon icon={faHashtag} />
+          <FontAwesomeIcon style={styles.optionText} icon={faHashtag} />
           <span style={styles.optionText}>Tags</span>
         </Col>
         <Col xs={4}>
-          <FontAwesomeIcon icon={faPen} />
+          <FontAwesomeIcon style={styles.optionText} icon={faPen} />
           <span style={styles.optionText}>Conteúdo</span>
         </Col>
       </Row>

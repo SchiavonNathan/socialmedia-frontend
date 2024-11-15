@@ -5,7 +5,7 @@ function UserSidebar({ user, onSearch }) {
     const styles = {
         sidebar: {
           maxWidth: '340px',
-          backgroundColor: '#ffffffd6',
+          backgroundColor: '#000000e2',
           border: '1px solid #ddd',
           borderRadius: '40px',
           padding: '30px',
@@ -48,13 +48,15 @@ function UserSidebar({ user, onSearch }) {
                 <div style={styles.dflex}>
                 <img src="../RafaLogo.png" alt="Imagem do RafinhaBlog" style={styles.smallImage} />
                 </div>
-                <h2 className="Rafinha">RafinhaBlog</h2>
-                <strong>Nome:</strong> {user.name}
-                <br />
-                <strong>Email:</strong> {user.email}
+                <div className='text-white'>
+                  <h2 className="Rafinha">RafinhaBlog</h2>
+                  Nome:  {user.name}
+                  <br />
+                  Email: {user.email}
+                </div> 
                 </>
             ) : (
-                <p>Carregando dados...</p>
+                <p className='text-white'>Carregando dados...</p>
             )}
         </div>
 
