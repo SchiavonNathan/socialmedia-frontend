@@ -7,7 +7,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 function UserSidebar({ user, onSearch, setonSearch, postagens, setPostagens }) {
   const styles = {
     sidebar: {
-      maxWidth: '300px', // Tamanho inicial reduzido
+      maxWidth: '300px', 
       backgroundColor: '#000000e2',
       border: '1px solid #ddd',
       borderRadius: '40px',
@@ -16,22 +16,22 @@ function UserSidebar({ user, onSearch, setonSearch, postagens, setPostagens }) {
       position: 'fixed',
       left: '40px',
       top: '50px',
-      transformOrigin: 'top', // Define a origem da transformação no topo
-      transition: 'transform 0.3s ease', // Adiciona a transição para o efeito hover
+      transformOrigin: 'top', 
+      transition: 'transform 0.3s ease', 
     },
     sidebarHover: {
-      transform: 'scale(1.2)', // Escala de 120% ao passar o mouse
+      transform: 'scale(1.2)', 
     },
     userInfo: {
       textAlign: 'center',
     },
     searchBox: {
-      borderRadius: '20px',
+      borderRadius: '12px',
     },
     searchIcon: {
       cursor: 'pointer',
-      borderRadius: '20px',
-      marginLeft: '5px',
+      borderRadius: '12px',
+      marginLeft: '2px',
     },
     profileButton: {
       width: '100%',
@@ -59,10 +59,8 @@ function UserSidebar({ user, onSearch, setonSearch, postagens, setPostagens }) {
 
   const navigateToHome = () => {
     if (location.pathname === '/Home') {
-      // Se já estiver na página "Home", apenas faz um refresh
       window.location.reload();
     } else {
-      // Se não estiver na página "Home", navega para ela
       navigate('/Home');
     }
   };
@@ -87,10 +85,10 @@ function UserSidebar({ user, onSearch, setonSearch, postagens, setPostagens }) {
     <Container
       style={{
         ...styles.sidebar,
-        ...(isHovered ? styles.sidebarHover : {}), // Aplica o estilo de hover condicionalmente
+        ...(isHovered ? styles.sidebarHover : {}),
       }}
-      onMouseEnter={() => setIsHovered(true)} // Detecta o mouse entrando
-      onMouseLeave={() => setIsHovered(false)} // Detecta o mouse saindo
+      onMouseEnter={() => setIsHovered(true)} 
+      onMouseLeave={() => setIsHovered(false)} 
     >
       <div style={styles.userInfo}>
         {user ? (

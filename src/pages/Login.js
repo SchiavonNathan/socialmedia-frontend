@@ -82,12 +82,12 @@ const Login = () => {
             style={{
               boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
               borderRadius: "4px",
-              padding: "0", // Remove o padding para evitar bordas visíveis ao redor
-              width: "100%",  // Faz o contêiner ter a largura total
+              padding: "0", 
+              width: "100%",  
               marginBottom: "10px",
               display: "flex",
               justifyContent: "center",
-              overflow: "hidden" // Oculta qualquer parte do botão que ultrapasse o contêiner
+              overflow: "hidden" // 
             }}
           ></div>
           <button 

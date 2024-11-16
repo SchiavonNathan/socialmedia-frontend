@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage, faHashtag, faPen } from '@fortawesome/free-solid-svg-icons'; // Importando ícones do Font Awesome
+import { faImage, faHashtag, faPen } from '@fortawesome/free-solid-svg-icons'; 
 
 
 function PublicacaoComponent({ user, isModalOpen, setIsModalOpen, titulo, setTitulo, conteudo, setConteudo, tags, setTags, foto, setFoto, postagemEditando, setPostagemEditando}) {

@@ -51,8 +51,7 @@ const Postagem = () => {
       // Criar uma nova postagem
       axios.post('http://localhost:3001/postagens', newPost)
         .then(response => {
-          // Adiciona a nova postagem ao estado (se necessário)
-          setPostagem(response.data); // Adiciona a nova postagem diretamente
+          setPostagem(response.data); 
           setIsModalOpen(false);
         })
         .catch(error => console.error('Erro ao criar postagem', error));

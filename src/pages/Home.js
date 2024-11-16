@@ -15,7 +15,7 @@ const Home = () => {
   const [user, setUser] = useState(null);
   const [postagens, setPostagens] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showOffcanvas, setShowOffcanvas] = useState(false); // Controle do Offcanvas
+  const [showOffcanvas, setShowOffcanvas] = useState(false); 
   const [titulo, setTitulo] = useState("");
   const [conteudo, setConteudo] = useState("");
   const [tags, setTags] = useState("");
@@ -254,8 +254,8 @@ const Home = () => {
                 padding: '0.5rem',
                 fontSize: '0.9rem',
                 overflowY: 'auto',
-                width: '80%', // Reduz a largura para 80%
-                maxWidth: '200px', // Limita a largura máxima para telas maiores
+                width: '80%', 
+                maxWidth: '200px', 
               }}
               className="d-flex pe-5"
             />
