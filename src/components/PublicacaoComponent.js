@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faHashtag, faPen } from '@fortawesome/free-solid-svg-icons'; // Importando ícones do Font Awesome
 
 
-function PublicacaoComponent({ user, isModalOpen, setIsModalOpen }) {
+function PublicacaoComponent({ user, isModalOpen, setIsModalOpen, titulo, setTitulo, conteudo, setConteudo, tags, setTags, foto, setFoto, postagemEditando, setPostagemEditando}) {
   const styles = {
     container: {
       maxWidth: '595px',
@@ -56,6 +56,11 @@ function PublicacaoComponent({ user, isModalOpen, setIsModalOpen }) {
   };
 
   const openModal = () => {
+    setTitulo("");
+    setConteudo("");
+    setTags("");
+    setFoto("");
+    setPostagemEditando(null);
     setIsModalOpen(true);
   };
 

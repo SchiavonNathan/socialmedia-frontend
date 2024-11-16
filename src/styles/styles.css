@@ -83,6 +83,30 @@ html, body {
   border:3px solid #8000ff;     
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.855); 
 }
+.drop {
+  position: absolute;
+  left: 29rem; /* 465px convertido para rem (465px / 16px = 29rem) */
+  z-index: 1050;
+}
+.telinha {
+  background-color: #002823 !important;
+  border:1px solid #37ffaf !important; 
+  color: white !important;
+}
+
+.telinha .dropdown-item {
+  color: white !important; /* Garantir que o texto do item também fique branco */
+}
+
+.telinha .dropdown-item:hover {
+  background-color: #005750 !important; /* Cor de hover para o item */
+}
+@media (max-width: 768px) {
+  .drop {
+    left: 13rem; /* Ajuste se necessário */
+    top: 5px; /* Distância ajustada para telas menores */
+  }
+}
 
 .blackRgb{
   background-color: #000000e2 !important;

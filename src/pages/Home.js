@@ -6,7 +6,10 @@ import PublicacaoComponent from '../components/PublicacaoComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faBars } from '@fortawesome/free-solid-svg-icons';
 import UserSidebar from '../components/UserSidebar';
+
 import { useNavigate } from 'react-router-dom';
+import { Dropdown } from 'react-bootstrap'; 
+import { FaBars } from 'react-icons/fa';
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -123,10 +126,21 @@ const Home = () => {
 
         <PublicacaoComponent 
           user={user} 
+          titulo = {""}
+          setTitulo = {setTitulo}
+          conteudo = {""}
+          setConteudo= {setConteudo}
+          tags = {""}
+          setTags= {setTags}
+          foto = {""}
+          setFoto= {setFoto}
+          postagemEditando = {null}
+          setPostagemEditando = {setPostagemEditando}
           isModalOpen={isModalOpen} 
           setIsModalOpen={setIsModalOpen} 
         />
         
+
         <div className="pt-3" style={{ maxHeight: '1300px', overflowY: 'auto', paddingRight: '10px' }}>
         <Row>
           {postagens.length > 0 ? (
@@ -179,6 +193,8 @@ const Home = () => {
           )}
         </Row>
       </div>
+
+
 
         {/* Botão de Criar Postagem (Flutuante) */}
         <Button

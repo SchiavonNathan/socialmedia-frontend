@@ -3,6 +3,7 @@ import { Container, Button, InputGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+
 function UserSidebar({ user, onSearch, setonSearch, postagens, setPostagens }) {
   const styles = {
     sidebar: {
