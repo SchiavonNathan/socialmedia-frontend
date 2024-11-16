@@ -2,7 +2,9 @@ import React from 'react';
 import { Container, Col, Row, Button, InputGroup, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 
+
 function UserSidebar({ user, onSearch, setonSearch, postagens, setPostagens}) {
+    
     const styles = {
         sidebar: {
           maxWidth: '340px',
@@ -22,7 +24,9 @@ function UserSidebar({ user, onSearch, setonSearch, postagens, setPostagens}) {
           borderRadius: '20px',
         },
         searchIcon: {
+          outline: 'none !important',
           cursor: 'pointer',
+          border: '1px solid white',
           borderRadius: '20px',
           marginLeft: '5px'
         },
@@ -33,17 +37,18 @@ function UserSidebar({ user, onSearch, setonSearch, postagens, setPostagens}) {
         },
         dflex: {
           display: 'flex',
-          justifyContent: 'center', /* Centraliza a imagem */
-          alignItems: 'center', /* Alinha a imagem verticalmente */
+          justifyContent: 'center',
+          alignItems: 'center', 
         },
         smallImage: {
-          width: '150px', /* Ajuste para o tamanho desejado */
-          height: '150px', /* Mantém a proporção da imagem */
+          width: '150px', 
+          height: '150px', 
         },
         clickIcon: {
-          cursor: 'pointer',
-          borderRadius: '20px',
-          backgroundColor: '#00000000'
+          border: 'none', 
+          cursor: 'pointer',  
+          backgroundColor: '#00000000',
+          outline: 'none !important'
         }
       };
 
