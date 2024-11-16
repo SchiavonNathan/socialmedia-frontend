@@ -105,6 +105,8 @@ const Home = () => {
             user={user} 
             onSearch={onSearch}
             setonSearch={setonSearch} 
+            postagens={postagens}
+            setPostagens={setPostagens}
           />
         </Col>
 

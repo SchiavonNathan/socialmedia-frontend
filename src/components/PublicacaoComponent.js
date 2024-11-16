@@ -42,6 +42,7 @@ function PublicacaoComponent({ user, isModalOpen, setIsModalOpen }) {
       borderRadius: '30px',
       backgroundColor: '#212121c6',
       width: '100%',
+      color: 'white'
     },
     optionText: {
       fontSize: '0.9rem',

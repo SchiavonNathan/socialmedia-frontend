@@ -1,7 +1,8 @@
 import React from 'react';
 import { Container, Col, Row, Button, InputGroup, FormControl } from 'react-bootstrap';
+import axios from 'axios';
 
-function UserSidebar({ user, onSearch, setonSearch}) {
+function UserSidebar({ user, onSearch, setonSearch, postagens, setPostagens}) {
     const styles = {
         sidebar: {
           maxWidth: '340px',
@@ -23,6 +24,7 @@ function UserSidebar({ user, onSearch, setonSearch}) {
         searchIcon: {
           cursor: 'pointer',
           borderRadius: '20px',
+          marginLeft: '5px'
         },
         profileButton: {
           width: '100%',
@@ -38,11 +40,27 @@ function UserSidebar({ user, onSearch, setonSearch}) {
           width: '150px', /* Ajuste para o tamanho desejado */
           height: '150px', /* Mantém a proporção da imagem */
         },
+        clickIcon: {
+          cursor: 'pointer',
+          borderRadius: '20px',
+          backgroundColor: '#00000000'
+        }
       };
 
-      function teste(){
-        console.log(onSearch)
-      }
+
+      const buscarPostagem = async () => {
+        console.log("Valor de busca:", onSearch);
+        setPostagens([]);
+      
+        try {
+          const response = await axios.get(`http://localhost:3001/postagens/search/${onSearch}`);
+          console.log("Postagens recebidas:", response.data);
+      
+          setPostagens(response.data);
+        } catch (error) {
+          console.error("Erro ao buscar postagens:", error);
+        }
+      };
 
   return (
     <Container style={styles.sidebar}>
@@ -76,9 +94,10 @@ function UserSidebar({ user, onSearch, setonSearch}) {
           style={styles.searchBox}
           value={onSearch}
           onChange={(e) => setonSearch(e.target.value)}
+          required
         />
         <InputGroup.Text style={styles.searchIcon}>
-          🔍<Button type='submit' onClick={teste}></Button>
+          <Button style={styles.clickIcon} type='submit' onClick={buscarPostagem}>🔍</Button>
         </InputGroup.Text>
       </InputGroup>
     </Container>
