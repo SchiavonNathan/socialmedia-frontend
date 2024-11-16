@@ -51,6 +51,8 @@ function UserSidebar({ user, onSearch, setonSearch, postagens, setPostagens }) {
       cursor: 'pointer',
       borderRadius: '20px',
       backgroundColor: '#00000000',
+      border: 'none',
+      padding: '4px'
     },
   };
 
