@@ -6,6 +6,9 @@ import PublicacaoComponent from '../components/PublicacaoComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faBars } from '@fortawesome/free-solid-svg-icons';
 import UserSidebar from '../components/UserSidebar';
+import { Dropdown } from 'react-bootstrap'; 
+import { FaBars } from 'react-icons/fa';
+
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -112,6 +115,16 @@ const Home = () => {
 
         <PublicacaoComponent 
           user={user} 
+          titulo = {""}
+          setTitulo = {setTitulo}
+          conteudo = {""}
+          setConteudo= {setConteudo}
+          tags = {""}
+          setTags= {setTags}
+          foto = {""}
+          setFoto= {setFoto}
+          postagemEditando = {null}
+          setPostagemEditando = {setPostagemEditando}
           isModalOpen={isModalOpen} 
           setIsModalOpen={setIsModalOpen} 
         />
@@ -122,32 +135,40 @@ const Home = () => {
               postagens.map((postagem) => (
                 <Col md={12} className="mb-4 d-flex justify-content-center text-white" key={postagem.id}>
                   <div className="w-100 p-4" 
-                       style={{ 
+                      style={{ 
                             maxWidth: '570px',
                             borderRadius: '2%', 
                             backgroundColor: 'black',
                             border: '1px solid #1bbba9',
-                            boxShadow: '1px 1px 10px black'
+                            boxShadow: '1px 1px 10px black',
+                            position: 'relative'  /* Importante para o dropdown ser posicionado dentro deste contêiner */
                             }}>                  
                     <Card.Body>
                       <Card.Title className="fs-1">{postagem.titulo}</Card.Title>
-                      <Card.Text >
+                      <Card.Text>
                         <small>{postagem.usuario.name} - {new Date(postagem.data_criacao).toLocaleDateString()}</small>
                       </Card.Text>
                       <Card.Text>{postagem.conteudo}</Card.Text>
                       <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
                       <img src={postagem.foto} alt="img" style={{ width: '100%', height: 'auto', paddingBottom: '15px' }} />
 
-                      {postagem.usuario.id === parseInt(userId) ? (
-                        <>
-                          <Button variant="btn btn-primary" onClick={() => abrirModalParaEdicao(postagem)} className="me-2">Editar</Button>
-                          <Button variant="btn btn-danger" onClick={() => handleDeletePost(postagem.id)} className="me-2">Excluir</Button>
-                        </>
-                      ) : (
-                        <Button variant="btn btn-warning" onClick={() => handleReportPost(postagem.id)} className="me-2">Denunciar</Button>
-                      )}
-                      
-                      <Button variant="btn btn-info" onClick={() => handleCopyLink(postagem.id)} className="me-2">Copiar Link</Button>
+                      <Dropdown className='drop'>
+                        <Dropdown.Toggle variant="btn btn-primary" id="dropdown-custom-components">
+                          <FaBars />
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu className="telinha">
+                          {postagem.usuario.id === parseInt(userId) ? (
+                            <>
+                              <Dropdown.Item as="button" onClick={() => abrirModalParaEdicao(postagem)}>Editar</Dropdown.Item>
+                              <Dropdown.Item as="button" onClick={() => handleDeletePost(postagem.id)}>Excluir</Dropdown.Item>
+                            </>
+                          ) : (
+                            <Dropdown.Item as="button" onClick={() => handleReportPost(postagem.id)}>Denunciar</Dropdown.Item>
+                          )}
+                          <Dropdown.Item as="button" onClick={() => handleCopyLink(postagem.id)}>Copiar Link</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
                     </Card.Body>
                   </div>
                 </Col>
@@ -157,6 +178,7 @@ const Home = () => {
             )}
           </Row>
         </div>
+
 
         {/* Botão de Criar Postagem (Flutuante) */}
         <Button
