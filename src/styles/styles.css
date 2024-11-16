@@ -93,11 +93,9 @@ html, body {
   border:1px solid #37ffaf !important; 
   color: white !important;
 }
-
 .telinha .dropdown-item {
   color: white !important; /* Garantir que o texto do item também fique branco */
 }
-
 .telinha .dropdown-item:hover {
   background-color: #005750 !important; /* Cor de hover para o item */
 }

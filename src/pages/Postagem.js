@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Card, Container, Row, Col, Modal, Form, Offcanvas } from 'react-bootstrap';
 import UserSidebar from '../components/UserSidebar';
+import { Dropdown } from 'react-bootstrap'; 
+import { FaBars } from 'react-icons/fa';
 
 const Postagem = () => {
   const { id } = useParams();
@@ -132,15 +134,22 @@ const Postagem = () => {
                     <Card.Text>{postagem.conteudo}</Card.Text>
                     <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
                     <img src={postagem.foto} alt="img" style={{ width: '100%', height: 'auto', paddingBottom: '15px' }} />
-                    {postagem.usuario.id === parseInt(userId) ? (
-                      <>
-                        <Button variant="btn btn-primary" onClick={(e) => [e.stopPropagation(), abrirModalParaEdicao(postagem)]} className="me-2">Editar</Button>
-                        <Button variant="btn btn-danger" onClick={(e) => [e.stopPropagation(), handleDeletePost(postagem.id)]} className="me-2">Excluir</Button>
-                      </>
-                    ) : (
-                      <Button variant="btn btn-warning" onClick={(e) => [e.stopPropagation(), handleReportPost(postagem.id)]} className="me-2">Denunciar</Button>
-                    )}
-                    <Button variant="btn btn-info" onClick={(e) => [e.stopPropagation(), handleCopyLink(postagem.id)]} className="me-2">Copiar Link</Button>
+                    <Dropdown className='drop' onClick={(e) => e.stopPropagation()}>
+                        <Dropdown.Toggle variant="btn btn-primary" id="dropdown-custom-components" >
+                          <FaBars />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu className="telinha">
+                          {postagem.usuario.id === parseInt(userId) ? (
+                            <>
+                              <Dropdown.Item as="button" onClick={() => abrirModalParaEdicao(postagem)}>Editar</Dropdown.Item>
+                              <Dropdown.Item as="button" onClick={() => handleDeletePost(postagem.id)}>Excluir</Dropdown.Item>
+                            </>
+                          ) : (
+                            <Dropdown.Item as="button" onClick={() => handleReportPost(postagem.id)}>Denunciar</Dropdown.Item>
+                          )}
+                          <Dropdown.Item as="button" onClick={() => handleCopyLink(postagem.id)}>Copiar Link</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
                   </Card.Body>
                 </div>
               </Col>
