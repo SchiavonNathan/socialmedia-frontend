@@ -5,6 +5,7 @@ import { Button, Card, Container, Row, Col, Modal, Form, Offcanvas } from 'react
 import UserSidebar from '../components/UserSidebar';
 import { Dropdown } from 'react-bootstrap'; 
 import { FaBars } from 'react-icons/fa';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 const Postagem = () => {
   const { id } = useParams();
@@ -16,6 +17,7 @@ const Postagem = () => {
   const [tags, setTags] = useState("");
   const [foto, setFoto] = useState("");
   const [postagemEditando, setPostagemEditando] = useState(null);
+  const [liked, setLiked] = userState(false);
   const userId = localStorage.getItem('user_id');
   const navigate = useNavigate();
   
@@ -29,13 +31,30 @@ const Postagem = () => {
 
   useEffect(() => {
     axios.get(`http://localhost:3001/postagens/${id}`)
-      .then(response => setPostagem(response.data))
+      .then(response => {
+        setPostagem(response.data);
+        const isLiked = response.data.likes.some(like => like.usuario.id === parseInt(userId));
+        setLiked(isLiked);
+      })
       .catch(error => console.error('Erro ao carregar postagem:', error));
   }, [id]);
 
   if (!postagem) {
     return <p>Carregando postagem...</p>;
   }
+
+  const handleLike = () => {
+    const url = liked
+    ? `http://localhost:3001/postagens/descurtir/${id}`
+    : `http://localhost:3001/postagens/curtir/${id}`;
+
+    axios.post(url, { usuarioId: userId })
+      .then(response => {
+        setPostagem(response.data); //atualiza o post
+        setLiked(!liked); //altera status de curtida
+      })
+      .catch(error => console.error('Erro ao curtir/descurtir postagem:', error));
+  };
 
   const handleCreateOrUpdatePost = () => {
     const newPost = { titulo, conteudo, tags, usuarioId: userId, foto };
@@ -134,6 +153,12 @@ const Postagem = () => {
                     <Card.Text>{postagem.conteudo}</Card.Text>
                     <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
                     <img src={postagem.foto} alt="img" style={{ width: '100%', height: 'auto', paddingBottom: '15px' }} />
+
+                    {/* Botão like/deslike */}
+                    <Button variant={liked ? "sucess": "outline-sucess"} onClick={handleLike} className="me-2">
+                      {liked ? <faThumbsUp /> : <faRegThumbsUp />} {postagem.like.length}
+                    </Button>
+
                     <Dropdown className='drop' onClick={(e) => e.stopPropagation()}>
                         <Dropdown.Toggle variant="btn btn-primary" id="dropdown-custom-components" >
                           <FaBars />
