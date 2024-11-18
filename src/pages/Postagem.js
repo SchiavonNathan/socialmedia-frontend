@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Button, Card, Container, Row, Col, Modal, Form, Offcanvas } from 'react-bootstrap';
 import UserSidebar from '../components/UserSidebar';
 import { Dropdown } from 'react-bootstrap'; 
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaRegThumbsDown } from 'react-icons/fa';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 const Postagem = () => {
@@ -17,7 +17,7 @@ const Postagem = () => {
   const [tags, setTags] = useState("");
   const [foto, setFoto] = useState("");
   const [postagemEditando, setPostagemEditando] = useState(null);
-  const [liked, setLiked] = userState(false);
+  const [liked, setLiked] = useState(false);
   const userId = localStorage.getItem('user_id');
   const navigate = useNavigate();
   
@@ -50,6 +50,7 @@ const Postagem = () => {
 
     axios.post(url, { usuarioId: userId })
       .then(response => {
+        console.log("Resposta da API: ". response.data);
         setPostagem(response.data); //atualiza o post
         setLiked(!liked); //altera status de curtida
       })
@@ -155,9 +156,9 @@ const Postagem = () => {
                     <img src={postagem.foto} alt="img" style={{ width: '100%', height: 'auto', paddingBottom: '15px' }} />
 
                     {/* Botão like/deslike */}
-                    <Button variant={liked ? "sucess": "outline-sucess"} onClick={handleLike} className="me-2">
-                      {liked ? <faThumbsUp /> : <faRegThumbsUp />} {postagem.like.length}
-                    </Button>
+                    <button onClick={handleLike} aria-label="Curtir">
+                      {liked ? "Descurtir" : "Curtir"}
+                    </button>
 
                     <Dropdown className='drop' onClick={(e) => e.stopPropagation()}>
                         <Dropdown.Toggle variant="btn btn-primary" id="dropdown-custom-components" >
