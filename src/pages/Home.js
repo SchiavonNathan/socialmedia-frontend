@@ -88,7 +88,23 @@ const Home = () => {
   // HTML ==================================================================================================  
   return (
   <div className="cadastro-login">
-    <Container className="my-5 cinza">
+    <Container className="my-5 cinza" style={{ position: "relative" }}>
+      {/* Botão de perfil no canto superior direito */}
+      <Button
+        variant="success"
+        href="/profile"
+        style={{
+          position: "absolute",
+          top: 10,
+          right: 10,
+          borderRadius: "50px",
+          padding: "10px 20px",
+          fontSize: "16px"
+        }}
+      >
+        Perfil
+      </Button>
+
       <Row className="justify-content-center">
         <Col md={8} className="text-center">
           <h2 className="text-primary">Bem-vindo à Home</h2>
