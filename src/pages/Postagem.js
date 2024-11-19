@@ -10,6 +10,7 @@ const Postagem = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [postagem, setPostagem] = useState(null);
+  const [comentario, setComentario] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [titulo, setTitulo] = useState("");
   const [conteudo, setConteudo] = useState("");
@@ -32,10 +33,38 @@ const Postagem = () => {
       .then(response => setPostagem(response.data))
       .catch(error => console.error('Erro ao carregar postagem:', error));
   }, [id]);
+  
+  useEffect(() => {
+    axios.get(`http://localhost:3001/comentarios`)
+      .then(response => setComentario(response.data))
+      .catch(error => console.error('Erro ao carregar comentarios:', error));
+  }, [comentario]);
 
   if (!postagem) {
     return <p>Carregando postagem...</p>;
   }
+
+  const handleCreateOrUpdateComentario = () => {
+    const newComentario = { conteudo, usuarioId: userId, postagemId: id };
+    
+    if (postagemEditando) {
+      axios.put(`http://localhost:3001/postagens/${postagemEditando}`, newComentario)
+        .then(response => {
+          setPostagem(response.data); 
+          setIsModalOpen(false);
+        })
+        .catch(error => console.error('Erro ao editar postagem', error));
+    } else {
+      axios.post('http://localhost:3001/comentarios', newComentario)
+        .then(response => {
+          console.log(response.data); 
+          setIsModalOpen(false);
+        })
+        .catch(error => console.error('Erro ao criar comentario', error));
+    }
+  };
+
+
 
   const handleCreateOrUpdatePost = () => {
     const newPost = { titulo, conteudo, tags, usuarioId: userId, foto };
@@ -170,7 +199,52 @@ const Postagem = () => {
                 >
                   <Card.Body>
                     <Card.Title className="fs-1">Comentários</Card.Title>
-                    
+                   
+                   
+                      <div className="pt-3" style={{ maxHeight: '1300px', overflowY: 'auto', paddingRight: '10px' }}>
+                        <Row>
+                          {comentario.length > 0 ? (
+                            comentario.map((comentario) => (
+                              <Col md={12} className="mb-4 d-flex justify-content-center text-white" key={comentario.id}>
+                                <div
+                                  className="w-100 p-4 postagemHome"
+                                  style={{
+                                    maxWidth: '570px',
+                                    borderRadius: '2%',
+                                    backgroundColor: 'black',
+                                    border: '1px solid #1bbba9',
+                                    boxShadow: '1px 1px 10px black',
+                                    position: 'relative',  /* Importante para o dropdown ser posicionado dentro deste contêiner */
+                                    cursor: 'pointer',
+                                  }}
+                                >
+                                  <Card.Body>
+                                    <Card.Title className="fs-1">{comentario.usuario.name}</Card.Title>
+                                    <Card.Text>
+                                      <small>
+                                        {comentario.usuario.name} - 
+                                        {new Date(comentario.dataCriacao).toLocaleDateString('pt-BR', {
+                                          day: '2-digit',
+                                          month: '2-digit',
+                                          year: 'numeric',
+                                        })} 
+                                        {` ${new Date(comentario.dataCriacao).getHours().toString().padStart(2, '0')}:${new Date(comentario.postagem.data_criacao).getMinutes().toString().padStart(2, '0')}`}
+                                      </small>
+                                    </Card.Text>
+                                    <Card.Text>{comentario.conteudo}</Card.Text>
+                                    
+                                  </Card.Body>
+                                </div>
+                              </Col>
+                            ))
+                          ) : (
+                            <p className="text-center">Carregando comentario...</p>
+                          )}
+                        </Row>
+                      </div>
+
+
+
                   </Card.Body>
                 </div>
             </Col>
