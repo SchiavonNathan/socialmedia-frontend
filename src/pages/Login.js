@@ -50,7 +50,7 @@ const Login = () => {
     .then(res => {
       localStorage.setItem('user_id', res.data[0].id);
       console.log("Resposta do backend: ", res.data);
-      alert(`Login bem-sucedido! token`);
+      alert(`Login bem-sucedido!`);
       navigate('/home');
     })
     .catch(err => {
