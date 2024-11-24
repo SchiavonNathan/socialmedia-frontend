@@ -5,6 +5,7 @@ import { Button, Card, Container, Row, Col, Modal, Form, Offcanvas } from 'react
 import UserSidebar from '../components/UserSidebar';
 import { Dropdown } from 'react-bootstrap'; 
 import { FaBars } from 'react-icons/fa';
+import ShareButton from '../components/ShareButton'
 
 const Postagem = () => {
   const { id } = useParams();
@@ -188,6 +189,10 @@ const Postagem = () => {
                     <Card.Text>{postagem.conteudo}</Card.Text>
                     <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
                     <img src={postagem.foto} alt="img" style={{ width: '100%', height: 'auto', paddingBottom: '15px' }} />
+                    <ShareButton
+                    {/*url={`${window.location.origin}/postagem/$postagem.id`}*/}
+                      title={postagem.titulo}
+                    />
                     <button as="button" class="btn btn-primary" onClick={() => abrirModalParaEdicaoComentario(comentario)}>Comentar💬</button>
                     <Dropdown className='drop' onClick={(e) => e.stopPropagation()}>
                         <Dropdown.Toggle variant="btn btn-primary" id="dropdown-custom-components" >
