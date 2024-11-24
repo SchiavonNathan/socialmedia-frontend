@@ -4,8 +4,10 @@ import axios from 'axios';
 import { Button, Card, Container, Row, Col, Modal, Form, Offcanvas } from 'react-bootstrap';
 import UserSidebar from '../components/UserSidebar';
 import { Dropdown } from 'react-bootstrap'; 
-import { FaBars } from 'react-icons/fa';
-import ShareButton from '../components/ShareButton'
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { FaBars, FaRegThumbsDown } from 'react-icons/fa';
+import ShareButton from '../components/ShareButton';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 const Postagem = () => {
   const { id } = useParams();
@@ -22,6 +24,7 @@ const Postagem = () => {
   const [tags, setTags] = useState("");
   const [foto, setFoto] = useState("");
   const [postagemEditando, setPostagemEditando] = useState(null);
+  const [liked, setLiked] = useState(false);
   const userId = localStorage.getItem('user_id');
   const navigate = useNavigate();
   
@@ -35,7 +38,11 @@ const Postagem = () => {
 
   useEffect(() => {
     axios.get(`http://localhost:3001/postagens/${id}`)
-      .then(response => setPostagem(response.data))
+      .then(response => {
+        setPostagem(response.data);
+        const isLiked = response.data.likes.some(like => like.usuario.id === parseInt(userId));
+        setLiked(isLiked);
+      })
       .catch(error => console.error('Erro ao carregar postagem:', error));
   }, [id]);
   
@@ -51,6 +58,21 @@ const Postagem = () => {
   if (!postagem) {
     return <p>Carregando postagem...</p>;
   }
+
+
+  const handleLike = () => {
+    const url = liked
+    ? `http://localhost:3001/postagens/descurtir/${id}`
+    : `http://localhost:3001/postagens/curtir/${id}`;
+
+    axios.post(url, { usuarioId: userId })
+      .then(response => {
+        console.log("Resposta da API: ". response.data);
+        setPostagem(response.data); //atualiza o post
+        setLiked(!liked); //altera status de curtida
+      })
+      .catch(error => console.error('Erro ao curtir/descurtir postagem:', error));
+  };
 
   const handleCreateOrUpdateComentario = () => {
     const newComentario = { conteudo, usuarioId: userId, postagemId: id };
@@ -84,8 +106,6 @@ const Postagem = () => {
         .catch(error => console.error('Erro ao editar postagem', error));
 
   };
-
-
 
   const handleCreateOrUpdatePost = () => {
     const newPost = { titulo, conteudo, tags, usuarioId: userId, foto };
@@ -189,6 +209,10 @@ const Postagem = () => {
                     <Card.Text>{postagem.conteudo}</Card.Text>
                     <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
                     <img src={postagem.foto} alt="img" style={{ width: '100%', height: 'auto', paddingBottom: '15px' }} />
+                    {/* Botão like/deslike */}
+                    <button onClick={handleLike} aria-label="Curtir">
+                      {liked ? "Descurtir" : "Curtir"}
+                    </button>
                     <ShareButton
                       url={`${window.location.origin}/postagem/${postagem.id}`}
                       title={postagem.titulo}
