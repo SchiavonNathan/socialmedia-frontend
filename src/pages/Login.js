@@ -23,7 +23,6 @@ const Login = () => {
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('user_id', response.data.user_id);
 
-      alert(`Login bem-sucedido! token: ${response.data.access_token}`);
       navigate('/home');
 
     } catch (error) {
@@ -50,7 +49,6 @@ const Login = () => {
     .then(res => {
       localStorage.setItem('user_id', res.data[0].id);
       console.log("Resposta do backend: ", res.data);
-      alert(`Login bem-sucedido!`);
       navigate('/home');
     })
     .catch(err => {
