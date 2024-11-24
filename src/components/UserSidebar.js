@@ -18,6 +18,7 @@ function UserSidebar({ user, onSearch, setonSearch, postagens, setPostagens }) {
       top: '50px',
       transformOrigin: 'top', 
       transition: 'transform 0.3s ease', 
+      zIndex: 1001
     },
     sidebarHover: {
       transform: 'scale(1.2)', 

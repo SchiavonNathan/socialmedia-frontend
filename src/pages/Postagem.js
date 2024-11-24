@@ -11,6 +11,7 @@ const Postagem = () => {
   const [user, setUser] = useState(null);
   const [postagem, setPostagem] = useState(null);
   const [comentario, setComentario] = useState([]);
+  const [userComentario, setuserComentario] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [titulo, setTitulo] = useState("");
   const [conteudo, setConteudo] = useState("");
@@ -35,10 +36,13 @@ const Postagem = () => {
   }, [id]);
   
   useEffect(() => {
-    axios.get(`http://localhost:3001/comentarios`)
-      .then(response => setComentario(response.data))
+    axios.get(`http://localhost:3001/comentarios/${id}`)
+      .then(response => {
+        console.log(response.data)
+        setComentario(response.data)
+      })
       .catch(error => console.error('Erro ao carregar comentarios:', error));
-  }, [comentario]);
+  }, []);
 
   if (!postagem) {
     return <p>Carregando postagem...</p>;
