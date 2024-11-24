@@ -11,7 +11,11 @@ const Postagem = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [postagem, setPostagem] = useState(null);
+  const [comentarioNew, setComentarioNew] = useState(null);
   const [comentario, setComentario] = useState([]);
+  const [conteudoComentario, setConteudoComentario] = useState("");
+  const [userComentario, setuserComentario] = useState([]);
+  const [isModalOpenComentario, setIsModalOpenComentario] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [titulo, setTitulo] = useState("");
   const [conteudo, setConteudo] = useState("");
@@ -36,10 +40,13 @@ const Postagem = () => {
   }, [id]);
   
   useEffect(() => {
-    axios.get(`http://localhost:3001/comentarios`)
-      .then(response => setComentario(response.data))
+    axios.get(`http://localhost:3001/comentarios/${id}`)
+      .then(response => {
+        console.log(response.data)
+        setComentario(response.data)
+      })
       .catch(error => console.error('Erro ao carregar comentarios:', error));
-  }, [comentario]);
+  }, []);
 
   if (!postagem) {
     return <p>Carregando postagem...</p>;
@@ -51,7 +58,7 @@ const Postagem = () => {
     if (postagemEditando) {
       axios.put(`http://localhost:3001/postagens/${postagemEditando}`, newComentario)
         .then(response => {
-          setPostagem(response.data); 
+          setComentarioNew(response.data); 
           setIsModalOpen(false);
         })
         .catch(error => console.error('Erro ao editar postagem', error));
@@ -63,6 +70,19 @@ const Postagem = () => {
         })
         .catch(error => console.error('Erro ao criar comentario', error));
     }
+  };
+
+
+  const handleCreateComentario = () => {
+    const newComentario = { conteudo, usuarioId: userId, postagemId: id };
+    
+      axios.post(`http://localhost:3001/comentarios`, newComentario)
+        .then(response => {
+          setComentarioNew(response.data); 
+          setIsModalOpenComentario(false);
+        })
+        .catch(error => console.error('Erro ao editar postagem', error));
+
   };
 
 
@@ -124,6 +144,11 @@ const Postagem = () => {
     setIsModalOpen(true);
   };
 
+  const abrirModalParaEdicaoComentario = (comentario) => {
+    setConteudoComentario(comentario.conteudo);
+    setIsModalOpenComentario(true);
+  };
+
   return (
     <div className='cinza'>
       <Container className="ps-4 pe-2">
@@ -164,14 +189,11 @@ const Postagem = () => {
                     <Card.Text>{postagem.conteudo}</Card.Text>
                     <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
                     <img src={postagem.foto} alt="img" style={{ width: '100%', height: 'auto', paddingBottom: '15px' }} />
-                    
-                    {/*Botao para compartilhamento no Whatsapp*/}
-
                     <ShareButton
-                      url={`${window.location.origin}/postagem/$postagem.id`}
+                    {/*url={`${window.location.origin}/postagem/$postagem.id`}*/}
                       title={postagem.titulo}
                     />
-
+                    <button as="button" class="btn btn-primary" onClick={() => abrirModalParaEdicaoComentario(comentario)}>Comentar💬</button>
                     <Dropdown className='drop' onClick={(e) => e.stopPropagation()}>
                         <Dropdown.Toggle variant="btn btn-primary" id="dropdown-custom-components" >
                           <FaBars />
@@ -228,7 +250,6 @@ const Postagem = () => {
                                   }}
                                 >
                                   <Card.Body>
-                                    <Card.Title className="fs-1">{comentario.usuario.name}</Card.Title>
                                     <Card.Text>
                                       <small>
                                         {comentario.usuario.name} - 
@@ -259,6 +280,38 @@ const Postagem = () => {
             </Col>
           </Row>
         </div>
+        
+        {/* Modal para Criação/Edição de Comentario */}
+        <div className='borderPurple'>
+          {/* Modal para Criação/Edição de Comentario */}
+          <Modal show={isModalOpenComentario} onHide={() => setIsModalOpenComentario(false)} centered >
+            <Modal.Header className='text-white blackRgb ' closeButton>
+              <Modal.Title >{postagemEditando ? "Editar comentário" : "Novo comentário"}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className='bg-black'>
+              <Form className='text-white'>
+                <Form.Group >
+                  <Form.Label>Conteúdo comentário</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    value={conteudo}
+                    onChange={(e) => setConteudo(e.target.value)}
+                  />
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            <Modal.Footer className='blackRgb'>
+              <Button variant="danger" onClick={() => setIsModalOpenComentario(false)}>
+                Cancelar
+              </Button>
+              <Button variant="primary" onClick={handleCreateComentario}>
+                {postagemEditando ? "Salvar Alterações" : "Comentar"}
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
+
 
         {/* Modal para Edição de Postagem */}
         <div className='borderPurple'>
