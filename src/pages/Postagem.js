@@ -190,7 +190,7 @@ const Postagem = () => {
                     <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
                     <img src={postagem.foto} alt="img" style={{ width: '100%', height: 'auto', paddingBottom: '15px' }} />
                     <ShareButton
-                    {/*url={`${window.location.origin}/postagem/$postagem.id`}*/}
+                      url={`${window.location.origin}/postagem/${postagem.id}`}
                       title={postagem.titulo}
                     />
                     <button as="button" class="btn btn-primary" onClick={() => abrirModalParaEdicaoComentario(comentario)}>Comentar💬</button>
