@@ -93,6 +93,16 @@ html, body {
   border:1px solid #37ffaf !important; 
   color: white !important;
 }
+
+.telinhaComentario {
+  background-color: #002823 !important;
+  border:1px solid #37ffaf !important; 
+  color: white !important;
+  position: absolute;
+  left: 50%; /* Centraliza horizontalmente */
+  transform: translateX(-50%); /* Ajusta a posição */
+  z-index: 1050; /* Garante que o menu fique por cima de outros elementos */
+}
 .telinha .dropdown-item {
   color: white !important; /* Garantir que o texto do item também fique branco */
 }

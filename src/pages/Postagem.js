@@ -15,7 +15,6 @@ const Postagem = () => {
   const [comentarioNew, setComentarioNew] = useState(null);
   const [comentario, setComentario] = useState([]);
   const [conteudoComentario, setConteudoComentario] = useState("");
-  const [userComentario, setuserComentario] = useState([]);
   const [isModalOpenComentario, setIsModalOpenComentario] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [titulo, setTitulo] = useState("");
@@ -57,11 +56,10 @@ const Postagem = () => {
   useEffect(() => {
     axios.get(`http://localhost:3001/comentarios/${id}`)
       .then(response => {
-        console.log(response.data)
         setComentario(response.data)
       })
       .catch(error => console.error('Erro ao carregar comentarios:', error));
-  }, []);
+  }, [comentario]);
 
   if (!postagem) {
     return <p>Carregando postagem...</p>;
@@ -101,7 +99,8 @@ const Postagem = () => {
 
 
   const handleCreateComentario = () => {
-    const newComentario = { conteudo, usuarioId: userId, postagemId: id };
+    setConteudo("")
+    const newComentario = { conteudo , usuarioId: userId, postagemId: id };
     
       axios.post(`http://localhost:3001/comentarios`, newComentario)
         .then(response => {
@@ -110,6 +109,14 @@ const Postagem = () => {
         })
         .catch(error => console.error('Erro ao editar postagem', error));
 
+  };
+
+  const handleDeletarComentario = async (comentarioId) => {
+    await axios.delete(`http://localhost:3001/comentarios/${comentarioId}`)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => console.error(error))
   };
 
   const handleCreateOrUpdatePost = () => {
@@ -135,7 +142,6 @@ const Postagem = () => {
     }
   };
   
-
   const handleCopyLink = (postagemId) => {
     const link = `${window.location.origin}/postagem/${postagemId}`;
     navigator.clipboard.writeText(link)
@@ -298,9 +304,16 @@ const Postagem = () => {
                                       </small>
                                     </Card.Text>
                                     <Card.Text>{comentario.conteudo}</Card.Text>
-                                    
+
+                                    {comentario.usuario.id === parseInt(userId) ? (
+                                        <>
+                                          <button type='button' class="btn btn-outline-danger" onClick={() => handleDeletarComentario(comentario.id)}>Apagar</button>
+                                        </>
+                                      ) :null}
+                                 
                                   </Card.Body>
                                 </div>
+                                
                               </Col>
                             ))
                           ) : (
