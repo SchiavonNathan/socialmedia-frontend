@@ -174,7 +174,13 @@ const Home = () => {
                     </Card.Text>
                     <Card.Text>{postagem.conteudo}</Card.Text>
                     <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
-                    <img src={postagem.foto} alt="img" style={{ width: '100%', height: 'auto', paddingBottom: '15px' }} />
+                    {postagem.foto && (
+                      <img 
+                        src={postagem.foto} 
+                        alt="Imagem da postagem" 
+                        style={{ width: '100%', height: 'auto', paddingBottom: '15px' }} 
+                      />
+                    )}
                     <Dropdown className='drop' onClick={(e) => e.stopPropagation()}>
                         <Dropdown.Toggle variant="btn btn-primary" id="dropdown-custom-components" >
                           <FaBars />
