@@ -41,11 +41,10 @@ const Postagem = () => {
   useEffect(() => {
     axios.get(`http://localhost:3001/comentarios/${id}`)
       .then(response => {
-        console.log(response.data)
         setComentario(response.data)
       })
       .catch(error => console.error('Erro ao carregar comentarios:', error));
-  }, []);
+  }, [comentario]);
 
   if (!postagem) {
     return <p>Carregando postagem...</p>;
@@ -257,9 +256,16 @@ const Postagem = () => {
                                       </small>
                                     </Card.Text>
                                     <Card.Text>{comentario.conteudo}</Card.Text>
-                                    
+
+                                    {comentario.usuario.id === parseInt(userId) ? (
+                                        <>
+                                          <button type='button' class="btn btn-outline-danger">Apagar</button>
+                                        </>
+                                      ) :null}
+                                 
                                   </Card.Body>
                                 </div>
+                                
                               </Col>
                             ))
                           ) : (

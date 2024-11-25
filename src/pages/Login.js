@@ -151,6 +151,14 @@ const Login = () => {
           </Link>
         </div>
       </div>
+      <div style={{
+          position: "absolute",
+          bottom: "50px", 
+          left: "50%",
+          transform: "translateX(-50%)",
+          textAlign: "center",
+          opacity: 0.7
+        }}>Copyrigth © 2024 RafinhaBlog LTDA</div>
     </div>
   );
 };
