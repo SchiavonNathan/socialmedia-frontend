@@ -7,7 +7,6 @@ import { Dropdown } from 'react-bootstrap';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FaBars, FaRegThumbsDown } from 'react-icons/fa';
 import ShareButton from '../components/ShareButton';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 const Postagem = () => {
   const { id } = useParams();
@@ -27,6 +26,7 @@ const Postagem = () => {
   const [liked, setLiked] = useState(false);
   const userId = localStorage.getItem('user_id');
   const navigate = useNavigate();
+  const [likesCount, setLikesCount] = useState(0);
   
   useEffect(() => {
     if (userId) {
@@ -37,14 +37,22 @@ const Postagem = () => {
   }, [userId]);
 
   useEffect(() => {
+    // Carregar dados da postagem
     axios.get(`http://localhost:3001/postagens/${id}`)
       .then(response => {
         setPostagem(response.data);
-        const isLiked = response.data.likes.some(like => like.usuario.id === parseInt(userId));
-        setLiked(isLiked);
+        setLikesCount(response.data.likesCount || 0);
+
+        // Verificar se o usuário já curtiu
+        axios.get(`http://localhost:3001/likes/${userId}`)
+          .then(res => {
+            const hasLiked = res.data.some(like => like.postagem.id === parseInt(id));
+            setLiked(hasLiked);
+          })
+          .catch(err => console.error('Erro ao verificar curtidas:', err));
       })
-      .catch(error => console.error('Erro ao carregar postagem:', error));
-  }, [id]);
+      .catch(err => console.error('Erro ao carregar postagem:', err));
+  }, [id, userId]);
   
   useEffect(() => {
     axios.get(`http://localhost:3001/comentarios/${id}`)
@@ -61,18 +69,15 @@ const Postagem = () => {
 
 
   const handleLike = () => {
-    const url = liked
-    ? `http://localhost:3001/postagens/descurtir/${id}`
-    : `http://localhost:3001/postagens/curtir/${id}`;
-
-    axios.post(url, { usuarioId: userId })
+    axios.post(`http://localhost:3001/likes/${id}/${userId}`)
       .then(response => {
-        console.log("Resposta da API: ". response.data);
-        setPostagem(response.data); //atualiza o post
-        setLiked(!liked); //altera status de curtida
+        const { liked: isLiked, totalLikes } = response.data;
+        setLiked(isLiked);
+        setLikesCount(totalLikes);
       })
-      .catch(error => console.error('Erro ao curtir/descurtir postagem:', error));
+      .catch(err => console.error('Erro ao curtir/descurtir postagem:', err));
   };
+
 
   const handleCreateOrUpdateComentario = () => {
     const newComentario = { conteudo, usuarioId: userId, postagemId: id };
@@ -208,11 +213,18 @@ const Postagem = () => {
                     </Card.Text>
                     <Card.Text>{postagem.conteudo}</Card.Text>
                     <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
-                    <img src={postagem.foto} alt="img" style={{ width: '100%', height: 'auto', paddingBottom: '15px' }} />
+                    {postagem.foto && (
+                      <img 
+                        src={postagem.foto} 
+                        alt="Imagem da postagem" 
+                        style={{ width: '100%', height: 'auto', paddingBottom: '15px' }} 
+                      />
+                    )}
                     {/* Botão like/deslike */}
-                    <button onClick={handleLike} aria-label="Curtir">
-                      {liked ? "Descurtir" : "Curtir"}
-                    </button>
+                    <small>{likesCount}</small>
+                <Button variant="link" onClick={handleLike}>
+                  {liked ? 'Descurtir' : 'Curtir'}
+                </Button>
                     <ShareButton
                       url={`${window.location.origin}/postagem/${postagem.id}`}
                       title={postagem.titulo}
