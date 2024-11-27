@@ -11,6 +11,8 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  localStorage.setItem('logado', 'false');
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -22,6 +24,8 @@ const Login = () => {
 
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('user_id', response.data.user_id);
+      localStorage.setItem('logado', 'true');
+      
 
       navigate('/home');
 
@@ -49,6 +53,7 @@ const Login = () => {
     .then(res => {
       localStorage.setItem('user_id', res.data[0].id);
       console.log("Resposta do backend: ", res.data);
+      localStorage.setItem('logado', 'true');
       navigate('/home');
     })
     .catch(err => {
@@ -88,33 +93,6 @@ const Login = () => {
               overflow: "hidden" // 
             }}
           ></div>
-          <button 
-            type="button" 
-            className="btn btn-primary w-100 mb-3" 
-            onClick={handleFacebookLogin} 
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#FFFFFF",
-              backgroundColor: "#1877F2",
-              border: "none",
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-              padding: "10px 0",
-              position: "relative" // Necessário para posicionar o ícone
-            }}
-          >{/* Botao do FACEBOOK */}
-            <i 
-              className="fab fa-facebook-f " 
-              style={{ 
-                fontSize: "20px", 
-                color: "#FFFFFF", 
-                position: "absolute", 
-                left: "14px" // Ajusta a posição à esquerda
-              }} 
-            ></i>
-            <span className="ms-3" style={{ fontSize: "15px", }}>Continue com Facebook</span>
-          </button>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
