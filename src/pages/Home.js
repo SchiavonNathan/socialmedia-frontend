@@ -6,6 +6,8 @@ import PublicacaoComponent from '../components/PublicacaoComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faBars } from '@fortawesome/free-solid-svg-icons';
 import UserSidebar from '../components/UserSidebar';
+import CreditsSidebar from '../components/CreditsSidebar'; 
+
 
 import { useNavigate } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap'; 
@@ -124,6 +126,7 @@ const Home = () => {
           />
         </Col>
 
+
         <PublicacaoComponent 
           user={user} 
           titulo = {""}
@@ -139,6 +142,12 @@ const Home = () => {
           isModalOpen={isModalOpen} 
           setIsModalOpen={setIsModalOpen} 
         />
+
+        {/* Créditos */}
+        <Col md={3} className="d-none d-md-block">
+            <CreditsSidebar />
+        </Col>
+    
         
 
         <div className="pt-3" style={{ maxHeight: '1300px', overflowY: 'auto', paddingRight: '10px' }}>
@@ -239,41 +248,45 @@ const Home = () => {
         </Button>
 
         {/* Offcanvas para Menu Lateral com Conteúdo do UserSidebar */}
-      <Offcanvas
+        <Offcanvas
           style={{ backgroundColor: '#000000a5' }}
           show={showOffcanvas}
           onHide={() => setShowOffcanvas(false)}
           placement="start"
           className="offcanvas-responsive"
         >
-        <Offcanvas.Header className="d-flex align-items-center justify-content-between">
-          <div className="d-flex align-items-center w-100 justify-content-between">
-            <Offcanvas.Title className="text-white fs-5 mb-0">Menu</Offcanvas.Title>
-            <button
-              type="button"
-              className="btn-close btn-close-white"
-              onClick={() => setShowOffcanvas(false)}
-              aria-label="Close"
-            />
-          </div>
-        </Offcanvas.Header>
+          <Offcanvas.Header className="d-flex align-items-center justify-content-between">
+            <div className="d-flex align-items-center w-100 justify-content-between">
+              <Offcanvas.Title className="text-white fs-5 mb-0">Menu</Offcanvas.Title>
+              <button
+                type="button"
+                className="btn-close btn-close-white"
+                onClick={() => setShowOffcanvas(false)}
+                aria-label="Close"
+              />
+            </div>
+          </Offcanvas.Header>
+
+          {/* Offcanvas Body com empilhamento vertical */}
           <Offcanvas.Body className="d-flex flex-column align-items-center px-6 py-3">
-            <UserSidebar
-              user={user}
-              onSearch={() => {}}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                padding: '0.5rem',
-                fontSize: '0.9rem',
-                overflowY: 'auto',
-                width: '80%', 
-                maxWidth: '200px', 
-              }}
-              className="d-flex pe-5"
-            />
+            <div className="d-flex flex-column w-100 align-items-center gap-4">
+
+
+      
+              {/* User Sidebar */}
+              <div className="user-sidebar w-100">
+                <UserSidebar
+                  user={user}
+                  onSearch={() => {}}
+                  className="d-flex flex-column px-2 py-1 overflow-auto"
+                />
+              </div>
+            </div>
           </Offcanvas.Body>
-      </Offcanvas>
+        </Offcanvas>
+
+
+
         <div className='borderPurple'>
           {/* Modal para Criação/Edição de Postagem */}
           <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} centered >
