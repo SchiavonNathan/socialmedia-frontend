@@ -3,12 +3,11 @@ import axios from 'axios';
 
 function Perfil() {
   // Definindo os dados estáticos do usuário
-  const foto = "../NathanChifrudo.png";
   const biografia = "Olá, sou um desenvolvedor web apaixonado por tecnologia e inovação!";
   const seguidores = 300;
   const seguindo = 180;
   const userId = localStorage.getItem('user_id');
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('');
 
   useEffect(() => {
     if (userId) {
@@ -26,7 +25,7 @@ function Perfil() {
             {/* Foto de perfil */}
             <div className="mb-4">
               <img
-                src={foto}
+                src={user.fotoPerfil}
                 alt="Foto do perfil"
                 className="rounded-circle border-black shadow"
                 style={{
