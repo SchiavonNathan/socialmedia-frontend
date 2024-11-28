@@ -2,10 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 function Perfil() {
-  // Definindo os dados estáticos do usuário
-  const biografia = "Olá, sou um desenvolvedor web apaixonado por tecnologia e inovação!";
-  const seguidores = 300;
-  const seguindo = 180;
+
   const userId = localStorage.getItem('user_id');
   const [user, setUser] = useState('');
 
@@ -55,7 +52,7 @@ function Perfil() {
 
             {/* Biografia */}
             <div className="mb-4">
-              <p className="text-white">{biografia}</p>
+              <p className="text-white">{user.biografia}</p>
             </div>
 
             {/* Botão Editar Perfil */}
