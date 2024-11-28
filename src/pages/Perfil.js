@@ -2,9 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 function Perfil() {
+
   // Definindo os dados estáticos do usuário
   const foto = "../NathanChifrudo.png";
   const biografia = "Olá, sou um desenvolvedor web apaixonado por tecnologia e inovação!";
+
   const userId = localStorage.getItem('user_id');
   const [user, setUser] = useState('');
 
@@ -24,7 +26,7 @@ function Perfil() {
             {/* Foto de perfil */}
             <div className="mb-4">
               <img
-                src={foto}
+                src={user.fotoPerfil}
                 alt="Foto do perfil"
                 className="rounded-circle border-black shadow"
                 style={{
@@ -54,7 +56,7 @@ function Perfil() {
 
             {/* Biografia */}
             <div className="mb-4">
-              <p className="text-white">{biografia}</p>
+              <p className="text-white">{user.biografia}</p>
             </div>
 
             {/* Botão Editar Perfil */}
