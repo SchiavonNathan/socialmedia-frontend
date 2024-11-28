@@ -33,7 +33,6 @@ function Perfil() {
                 }}
               />
             </div>
-\
             <div className="mb-2">
               <h3
                 className="Rafinha"
