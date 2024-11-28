@@ -5,8 +5,6 @@ function Perfil() {
   // Definindo os dados estáticos do usuário
   const foto = "../NathanChifrudo.png";
   const biografia = "Olá, sou um desenvolvedor web apaixonado por tecnologia e inovação!";
-  const seguidores = 300;
-  const seguindo = 180;
   const userId = localStorage.getItem('user_id');
   const [user, setUser] = useState('');
 
