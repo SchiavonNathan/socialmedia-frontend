@@ -8,7 +8,7 @@ function Perfil() {
   const seguidores = 300;
   const seguindo = 180;
   const userId = localStorage.getItem('user_id');
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('');
 
   useEffect(() => {
     if (userId) {
