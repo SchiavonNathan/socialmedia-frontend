@@ -3,10 +3,6 @@ import axios from 'axios';
 
 function Perfil() {
 
-  // Definindo os dados estáticos do usuário
-  const foto = "../NathanChifrudo.png";
-  const biografia = "Olá, sou um desenvolvedor web apaixonado por tecnologia e inovação!";
-
   const userId = localStorage.getItem('user_id');
   const [user, setUser] = useState('');
 
@@ -23,7 +19,7 @@ function Perfil() {
       <div className="container py-5">
         <div className="row justify-content-center">
           <div className="col-md-8 col-lg-6 text-center">
-            {/* Foto de perfil */}
+
             <div className="mb-4">
               <img
                 src={user.fotoPerfil}
@@ -37,8 +33,7 @@ function Perfil() {
                 }}
               />
             </div>
-
-            {/* Nome do usuário */}
+\
             <div className="mb-2">
               <h3
                 className="Rafinha"
@@ -53,20 +48,14 @@ function Perfil() {
                 {user.name}
               </h3>
             </div>
-
-            {/* Biografia */}
             <div className="mb-4">
               <p className="text-white">{user.biografia}</p>
             </div>
-
-            {/* Botão Editar Perfil */}
             <div className="mb-4">
               <button className="btn btn-primary w-100" style={{ borderRadius: "30px" }}>
                 Editar Perfil
               </button>
             </div>
-
-            {/* Seção de Postagens */}
             <div className="mb-5">
               <h4 className="text-light mb-4">Minhas Postagens</h4>
             </div>
