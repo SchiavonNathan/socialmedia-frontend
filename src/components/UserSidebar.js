@@ -111,7 +111,7 @@ function UserSidebar({ user, onSearch, setonSearch, postagens, setPostagens }) {
         )}
       </div>
 
-      <Button variant="btn btn-danger" style={styles.profileButton} onClick={() => {navigate('/perfil')}}>
+    <Button variant="btn btn-danger" style={styles.profileButton} onClick={() => {navigate(`/perfil/${user.id}`)}}>
         Ver Meu Perfil
       </Button>
 

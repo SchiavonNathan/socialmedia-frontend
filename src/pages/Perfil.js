@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 
 
@@ -11,14 +11,16 @@ import UserSidebar from '../components/UserSidebar';
 import CreditsSidebar from '../components/CreditsSidebar'; 
 
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap'; 
 import { FaBars } from 'react-icons/fa';
 
 function Perfil() {
 
+  const { id } = useParams();
   const userId = localStorage.getItem('user_id');
   const [user, setUser] = useState('');
+  const [userVisit, setUserVisitado] = useState('');
   const [postagens, setPostagens] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showOffcanvas, setShowOffcanvas] = useState(false); 
@@ -30,15 +32,25 @@ function Perfil() {
   const [onSearch, setonSearch] = useState(null);
 
   useEffect(() => {
+    // Buscar dados do usuário logado
     if (userId) {
       axios.get(`http://localhost:3001/users/${userId}`)
         .then(response => setUser(response.data))
-        .catch(error => console.error('Erro ao buscar dados do usuário', error));
+        .catch(error => console.error('Erro ao buscar dados do usuário logado:', error));
     }
   }, [userId]);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/postagens/usuario/${userId}`)
+    // Buscar dados do perfil visitado
+    if (id) {
+      axios.get(`http://localhost:3001/users/${id}`)
+        .then(response => setUserVisitado(response.data))
+        .catch(error => console.error('Erro ao buscar dados do perfil visitado:', error));
+    }
+  }, [id]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:3001/postagens/usuario/${id}`)
       .then(response => {
         // Ordena as postagens pela data de criação (da mais recente para a mais antiga)
         const sortedPostagens = response.data.sort((a, b) => new Date(b.data_criacao) - new Date(a.data_criacao));
@@ -117,7 +129,7 @@ function Perfil() {
 
             <div className="mb-4">
               <img
-                src={user.fotoPerfil}
+                src={userVisit.fotoPerfil}
                 alt="Foto do perfil"
                 className="rounded-circle border-black shadow"
                 style={{
@@ -139,16 +151,22 @@ function Perfil() {
                   textShadow: "1px 1px 2px rgba(255, 255, 255, 0.167)",
                 }}
               >
-                {user.name}
+                {userVisit.name}
               </h3>
             </div>
             <div className="mb-4">
-              <p className="text-white">{user.biografia}</p>
+              <p className="text-white">{userVisit.biografia}</p>
             </div>
             <div className="mb-4">
-              <button className="btn btn-primary w-100" style={{ borderRadius: "30px" }}>
-                Editar Perfil
-              </button>
+              {user?.id === userVisit?.id ? (
+                <button className="btn btn-primary w-100" style={{ borderRadius: "30px" }}>
+                  Editar Perfil
+                </button>
+              ) : (
+                <button className="btn btn-primary w-100" style={{ borderRadius: "30px" }}>
+                  Copiar link perfil
+                </button>
+              )}
             </div>
             
             <div className="cinza">

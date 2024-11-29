@@ -171,15 +171,25 @@ const Home = () => {
                   <Card.Body>
                     <Card.Title className="fs-1">{postagem.titulo}</Card.Title>
                     <Card.Text>
-                      <small>
-                        {postagem.usuario.name} - 
-                        {new Date(postagem.data_criacao).toLocaleDateString('pt-BR', {
-                          day: '2-digit',
-                          month: '2-digit',
-                          year: 'numeric',
-                        })} 
-                        {` ${new Date(postagem.data_criacao).getHours().toString().padStart(2, '0')}:${new Date(postagem.data_criacao).getMinutes().toString().padStart(2, '0')}`}
-                      </small>
+                    <small>
+                      {/* Adicionando link ao nome do usuário */}
+                      <span
+                        style={{ color: '#1bbba9', cursor: 'pointer', textDecoration: 'underline' }}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Impede que clique na postagem também seja acionado
+                          navigate(`/perfil/${postagem.usuario.id}`);
+                        }}
+                      >
+                        {postagem.usuario.name}
+                      </span>{' '}
+                      -{' '}
+                      {new Date(postagem.data_criacao).toLocaleDateString('pt-BR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                      })}
+                      {` ${new Date(postagem.data_criacao).getHours().toString().padStart(2, '0')}:${new Date(postagem.data_criacao).getMinutes().toString().padStart(2, '0')}`}
+                    </small>
                     </Card.Text>
                     <Card.Text>{postagem.conteudo}</Card.Text>
                     <Card.Text><strong>Tags:</strong> {postagem.tags}</Card.Text>
