@@ -20,9 +20,13 @@ function Perfil() {
   const { id } = useParams();
   const userId = localStorage.getItem('user_id');
   const [user, setUser] = useState('');
+  const [name, setName] = useState('');
+  const [biografia, setBiografia] = useState("");
+  const [fotoPerfil, setfotoPerfil] = useState('');
   const [userVisit, setUserVisitado] = useState('');
   const [postagens, setPostagens] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenPerfil, setIsModalOpenPerfil] = useState(false);
   const [showOffcanvas, setShowOffcanvas] = useState(false); 
   const [titulo, setTitulo] = useState("");
   const [conteudo, setConteudo] = useState("");
@@ -59,6 +63,8 @@ function Perfil() {
       .catch(error => console.error('Erro ao buscar postagens', error));
   }, []);
 
+  
+
   const abrirModalParaCriacao = () => {
     setTitulo("");
     setConteudo("");
@@ -75,6 +81,13 @@ function Perfil() {
     setFoto(postagem.foto);
     setPostagemEditando(postagem.id);
     setIsModalOpen(true);
+  };
+
+  const abrirModalParaEdicaoPerfil = (user) => {
+    setName(user.name);
+    setBiografia(user.biografia)
+    setfotoPerfil(user.fotoPerfil)
+    setIsModalOpenPerfil(true);
   };
 
   const handleCreateOrUpdatePost = () => {
@@ -121,6 +134,17 @@ function Perfil() {
     navigate(`/postagem/${postagemId}`);
   };
 
+  const handleUpdatePerfil = () => {
+    const newPerfil = {name, biografia, fotoPerfil};
+      axios.put(`http://localhost:3001/users/${userId}`, newPerfil )
+        .then(response => {
+          setUser(response.data);
+          setIsModalOpenPerfil(false);
+        })
+        .catch(error => console.error('Erro ao editar perfil', error));
+        window.location.reload(); 
+  }
+
   return (
     <div className=" py-5" style={{ background: "linear-gradient(135deg, #361b52, #005e53)" }}>
       <div className="container py-5">
@@ -159,7 +183,7 @@ function Perfil() {
             </div>
             <div className="mb-4">
               {user?.id === userVisit?.id ? (
-                <button className="btn btn-primary w-100" style={{ borderRadius: "30px" }}>
+                <button className="btn btn-primary w-100" style={{ borderRadius: "30px" }} onClick={() => abrirModalParaEdicaoPerfil(user)}>
                   Editar Perfil
                 </button>
               ) : (
@@ -386,6 +410,57 @@ function Perfil() {
                       </Button>
                       <Button variant="primary" onClick={handleCreateOrUpdatePost}>
                         {postagemEditando ? "Salvar Alterações" : "Criar Postagem"}
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </div>
+
+
+                <div className='borderPurple'>
+                  {/* Modal edicao de perfil */}
+                  <Modal show={isModalOpenPerfil} onHide={() => setIsModalOpenPerfil(false)} centered >
+                    <Modal.Header className='text-white blackRgb ' closeButton>
+                      <Modal.Title >EditarPerfil</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className='bg-black'>
+                      <Form className='text-white'>
+                        <Form.Group>
+                          <Form.Label>Nome</Form.Label>
+                          <Form.Control
+                            type="text"
+                            placeholder="Nome"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                          </Form.Group>
+                          <Form.Group >
+                          <Form.Label>Biografia</Form.Label>
+                          <Form.Control
+                            as="textarea"
+                            rows={3}
+                            placeholder="Biografia"
+                            value={biografia}
+                            onChange={(e) => setBiografia(e.target.value)}
+                          />
+                        </Form.Group>
+                        <Form.Group className="mt-3">
+                          <Form.Label>Foto de perfil (URL)</Form.Label>
+                          <Form.Control 
+                            type="text"
+                            placeholder="URL"
+                            value={fotoPerfil}
+                            onChange={(e) => setfotoPerfil(e.target.value)}
+                          />
+                        </Form.Group>
+                        
+                      </Form>
+                    </Modal.Body>
+                    <Modal.Footer className='blackRgb'>
+                      <Button variant="danger" onClick={() => setIsModalOpenPerfil(false)}>
+                        Cancelar
+                      </Button>
+                      <Button variant="primary" onClick={handleUpdatePerfil}>
+                        Salvar Alterações
                       </Button>
                     </Modal.Footer>
                   </Modal>
