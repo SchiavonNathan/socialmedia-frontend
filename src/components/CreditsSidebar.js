@@ -47,7 +47,7 @@ function CreditsSidebar() {
         <strong>Isaac Arantes</strong> 
       </div>
       <div style={styles.notParticipated}>
-        Demais integrantes não fizeram nada no trabalho.
+        Raul, Caian e João
       </div>
     </Container>
   );
